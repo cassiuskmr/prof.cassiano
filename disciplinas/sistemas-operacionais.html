@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemas Operacionais — Professor Cassiano</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<nav class="crumbs">
+  <a href="../index.html">Início</a><span>›</span>Sistemas Operacionais
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow" id="discEyebrow">Disciplina</span>
+      <h1 id="discNome">Sistemas Operacionais</h1>
+      <p id="discDesc">Como o computador organiza, processa e representa a informação por dentro.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="container">
+      <h2>Assuntos</h2>
+      <p class="sub">Conteúdos desta disciplina. Os marcados como "em breve" ainda estão em preparação.</p>
+      <div class="card-grid" id="assuntoGrid"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="../assets/disciplinas.js"></script>
+<script src="../assets/shell.js" data-base="../"></script>
+<script>
+  (function(){
+    var DISC_ID = "sistemas-operacionais"; // <- identifica qual disciplina é esta
+    var data = (window.PORTAL_DISCIPLINAS||[]).find(function(d){return d.id===DISC_ID;});
+    if(!data) return;
+
+    document.getElementById('discNome').textContent = data.nome;
+    document.getElementById('discDesc').textContent = data.descricao;
+    document.title = data.nome + " — Professor Cassiano";
+
+    var grid = document.getElementById('assuntoGrid');
+    (data.assuntos||[]).forEach(function(a, i){
+      var live = a.status === 'live';
+      var tile = document.createElement(live ? 'a' : 'div');
+      tile.className = 'tile' + (live ? '' : ' soon');
+      if(live) tile.href = '../' + a.pagina;
+      tile.style.setProperty('--tile-color','var(--'+(a.cor||'bin')+')');
+      tile.innerHTML =
+        '<span class="tnum">'+String(i+1).padStart(2,'0')+'</span>'+
+        '<h3>'+a.nome+'</h3>'+
+        '<p>'+a.descricao+'</p>'+
+        '<div class="meta">'+
+          (live
+            ? '<span class="badge live">Disponível</span><span class="arrow">→</span>'
+            : '<span class="badge">Em breve</span>')+
+        '</div>';
+      grid.appendChild(tile);
+    });
+  })();
+</script>
+</body>
+</html>

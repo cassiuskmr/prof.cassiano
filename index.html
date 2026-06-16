@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professor Cassiano — Material de Aula</title>
+<meta name="description" content="Portal de materiais de aula do Professor Cassiano: conteúdos interativos por disciplina para o ensino médio.">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* =====================================================
+   HOME — estilos exclusivos da página principal
+   ===================================================== */
+
+/* HERO */
+.home-hero{
+  padding:96px 0 80px;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+}
+/* Fundo: grade de pontos sutil */
+.home-hero::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle,var(--line) 1px,transparent 1px);
+  background-size:28px 28px;
+  opacity:.6;
+  pointer-events:none;
+}
+/* Brilhos coloridos de fundo */
+.home-hero::after{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 30%, rgba(37,99,235,.07), transparent),
+    radial-gradient(ellipse 50% 50% at 85% 70%, rgba(177,78,84,.05), transparent),
+    radial-gradient(ellipse 40% 40% at 50% 10%,  rgba(47,111,106,.04), transparent);
+  pointer-events:none;
+}
+.home-hero .container{position:relative;z-index:1;}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;color:var(--ink-faint);
+  margin-bottom:28px;
+}
+.hero-tag::before{
+  content:"";width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--dev),var(--bin));
+  flex-shrink:0;
+}
+
+.home-hero h1{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(38px,7vw,72px);line-height:1.02;
+  letter-spacing:-.03em;margin-bottom:24px;
+  max-width:800px;
+}
+.home-hero h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--dev) 0%,var(--bin) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.home-hero .lead{
+  font-size:19px;color:var(--ink-soft);max-width:560px;
+  line-height:1.65;margin-bottom:36px;
+}
+
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--ink);color:var(--paper);
+  text-decoration:none;padding:14px 28px;border-radius:12px;
+  font-size:15px;font-weight:600;letter-spacing:-.01em;
+  box-shadow:0 4px 12px rgba(26,31,46,.18);
+  transition:transform .18s,box-shadow .18s;
+}
+.hero-cta:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(26,31,46,.22);
+  color:var(--paper);
+}
+.hero-cta .arr{
+  display:inline-block;transition:transform .18s;
+}
+.hero-cta:hover .arr{transform:translateY(3px);}
+
+/* STATS */
+.home-stats{
+  border-bottom:1px solid var(--line);
+  background:var(--paper-2);
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  divide-x:1px solid var(--line);
+}
+.stat-item{
+  padding:28px 24px;
+  border-right:1px solid var(--line);
+  text-align:center;
+}
+.stat-item:last-child{border-right:none;}
+.stat-num{
+  display:block;
+  font-family:'Fraunces',serif;font-size:clamp(28px,4vw,40px);
+  font-weight:600;color:var(--ink);letter-spacing:-.02em;
+  margin-bottom:4px;
+}
+.stat-label{font-size:13px;color:var(--ink-faint);font-weight:500;}
+
+/* DISCIPLINAS */
+.section-intro{margin-bottom:32px;}
+.section-intro h2{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(24px,3.5vw,32px);letter-spacing:-.02em;
+  margin:10px 0 10px;
+}
+.section-intro p{font-size:16px;color:var(--ink-soft);max-width:500px;}
+
+/* FEATURES */
+.home-features{
+  padding:60px 0;
+  border-top:1px solid var(--line);
+  background:var(--card);
+}
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-top:36px;
+}
+.feat-card{
+  padding:28px 24px;border-radius:var(--radius);
+  border:1px solid var(--line);background:var(--paper);
+}
+.feat-icon{
+  width:44px;height:44px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:16px;
+}
+.feat-card h3{
+  font-family:'Fraunces',serif;font-size:18px;font-weight:600;
+  margin-bottom:8px;
+}
+.feat-card p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+
+/* Mobile */
+@media(max-width:860px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-item:nth-child(2){border-right:none;}
+  .stat-item:nth-child(3){border-top:1px solid var(--line);}
+  .stat-item:nth-child(4){border-top:1px solid var(--line);border-right:none;}
+  .features-grid{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .home-hero{padding:72px 0 60px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .home-hero h1{font-size:clamp(34px,9vw,52px);}
+}
+</style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+
+  <!-- ========== HERO ========== -->
+  <section class="home-hero">
+    <div class="container">
+      <div class="hero-tag">Portal de Materiais · Ensino Médio</div>
+      <h1>Aprender o que <em>acontece</em><br>dentro da máquina.</h1>
+      <p class="lead">Materiais interativos, exercícios com correção na hora e explicações sem pressa — organizados por disciplina, construídos passo a passo.</p>
+      <a href="#disciplinas" class="hero-cta">
+        Explorar disciplinas <span class="arr">↓</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <section class="home-stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item anim">
+          <b class="stat-num" id="statDisc">0</b>
+          <span class="stat-label">disciplinas</span>
+        </div>
+        <div class="stat-item anim anim-d1">
+          <b class="stat-num" id="statAssunto">0</b>
+          <span class="stat-label">aulas disponíveis</span>
+        </div>
+        <div class="stat-item anim anim-d2">
+          <b class="stat-num">100%</b>
+          <span class="stat-label">interativo</span>
+        </div>
+        <div class="stat-item anim anim-d3">
+          <b class="stat-num">0</b>
+          <span class="stat-label">dependências externas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DISCIPLINAS ========== -->
+  <section class="block" id="disciplinas">
+    <div class="container">
+      <div class="section-intro anim">
+        <span class="eyebrow">Conteúdos</span>
+        <h2>Escolha uma disciplina</h2>
+        <p>Cada disciplina tem assuntos organizados do mais básico ao mais avançado, com interativos que ajudam a visualizar o conceito.</p>
+      </div>
+      <div class="card-grid" id="discGrid"></div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES ========== -->
+  <section class="home-features">
+    <div class="container">
+      <span class="eyebrow anim">Como funciona</span>
+      <div class="features-grid">
+        <div class="feat-card anim anim-d1">
+          <div class="feat-icon" style="background:var(--dev-bg);">⚡</div>
+          <h3>Interativo por padrão</h3>
+          <p>Simuladores, calculadoras e rastreadores de algoritmo que respondem em tempo real, sem precisar de internet extra.</p>
+        </div>
+        <div class="feat-card anim anim-d2">
+          <div class="feat-icon" style="background:var(--bin-bg);">✓</div>
+          <h3>Correção na hora</h3>
+          <p>Exercícios com gabarito automático e explicação do raciocínio quando você erra — sem esperar a próxima aula.</p>
+        </div>
+        <div class="feat-card anim anim-d3">
+          <div class="feat-icon" style="background:var(--dec-bg);">📐</div>
+          <h3>Sem pressa</h3>
+          <p>Cada conceito é apresentado devagar, com analogias do dia a dia antes das fórmulas. A ideia é entender, não memorizar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/disciplinas.js"></script>
+<script src="assets/shell.js" data-base=""></script>
+<script>
+(function(){
+  /* ---- monta a grade de disciplinas ---- */
+  var data = window.PORTAL_DISCIPLINAS || [];
+  var grid = document.getElementById('discGrid');
+  var totalLive = 0;
+
+  data.forEach(function(d, i){
+    var liveCount = (d.assuntos||[]).filter(function(a){return a.status==='live';}).length;
+    var totalCount = (d.assuntos||[]).length;
+    totalLive += liveCount;
+
+    var tile = document.createElement('a');
+    tile.className = 'tile anim anim-d'+(Math.min(i+1,4));
+    tile.href = d.pagina;
+    tile.style.setProperty('--tile-color','var(--'+(d.cor||'bin')+')');
+    tile.innerHTML =
+      '<span class="tnum">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<h3>'+d.nome+'</h3>'+
+      '<p>'+d.descricao+'</p>'+
+      '<div class="meta">'+
+        '<span class="badge live">'+liveCount+' disponível'+(liveCount!==1?'is':'')+'</span>'+
+        (totalCount>liveCount?'<span class="badge">'+(totalCount-liveCount)+' em breve</span>':'')+
+        '<span class="arrow">→</span>'+
+      '</div>';
+    grid.appendChild(tile);
+  });
+
+  document.getElementById('statDisc').textContent    = data.length;
+  document.getElementById('statAssunto').textContent = totalLive;
+
+  /* ---- animações de entrada via IntersectionObserver ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, {threshold:0.12});
+
+  document.querySelectorAll('.anim').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
