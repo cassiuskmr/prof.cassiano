@@ -44,6 +44,13 @@ window.PORTAL_DISCIPLINAS = [
         cor: "dec",
         pagina: "disciplinas/exercicios-numeracao.html",
         status: "live"
+      },
+      {
+        nome: "Exercícios Aleatórios",
+        descricao: "Banco de 50 questões, 10 por tentativa, sorteadas a cada vez. Ideal para reforçar o conteúdo.",
+        cor: "oct",
+        pagina: "disciplinas/exercicios-aleatorios.html",
+        status: "live"
       }
       // Próximos assuntos desta disciplina entram aqui. Exemplo:
       // { nome:"Gerência de Memória", descricao:"...", cor:"oct", status:"soon" }
