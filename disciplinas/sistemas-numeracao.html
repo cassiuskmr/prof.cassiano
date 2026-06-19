@@ -17,15 +17,10 @@
     --card:#fffdf8;
     --line:#e0dcd0;
     --line-soft:#ebe7dc;
-    /* cada base tem sua cor identitária */
-    --bin:#2f6f6a;     /* binário - verde-petróleo */
-    --bin-bg:#e3efed;
-    --oct:#7a5ea8;     /* octal - violeta */
-    --oct-bg:#ede8f3;
-    --dec:#b8742a;     /* decimal - âmbar */
-    --dec-bg:#f6ebdc;
-    --hex:#b14e54;     /* hexadecimal - coral */
-    --hex-bg:#f5e4e4;
+    --bin:#2f6f6a; --bin-bg:#e3efed;
+    --oct:#7a5ea8; --oct-bg:#ede8f3;
+    --dec:#b8742a; --dec-bg:#f6ebdc;
+    --hex:#b14e54; --hex-bg:#f5e4e4;
     --info:#2f6f6a;
     --radius:14px;
     --shadow:0 1px 2px rgba(26,31,46,.04), 0 8px 24px rgba(26,31,46,.05);
@@ -33,222 +28,119 @@
 
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{
-    font-family:'Inter',sans-serif;
-    background:var(--paper);
-    color:var(--ink);
-    line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto;}
-    *{animation:none!important;transition:none!important;}
-  }
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
 
   /* ---------- LAYOUT ---------- */
   .shell{display:flex;min-height:100vh;}
 
-  /* Sidebar de navegação */
   .nav{
-    width:280px;
-    flex-shrink:0;
-    background:var(--paper-2);
-    border-right:1px solid var(--line);
-    padding:32px 0;
-    position:sticky;
-    top:0;
-    height:100vh;
-    overflow-y:auto;
+    width:280px;flex-shrink:0;background:var(--paper-2);border-right:1px solid var(--line);
+    padding:32px 0;position:sticky;top:0;height:100vh;overflow-y:auto;
   }
   .nav-brand{padding:0 28px 24px;border-bottom:1px solid var(--line);margin-bottom:20px;}
-  .nav-eyebrow{
-    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-faint);font-weight:600;margin-bottom:8px;
-  }
-  .nav-brand h1{
-    font-family:'Fraunces',serif;font-weight:600;font-size:23px;
-    line-height:1.15;color:var(--ink);
-  }
+  .nav-eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:8px;}
+  .nav-brand h1{font-family:'Fraunces',serif;font-weight:600;font-size:23px;line-height:1.15;color:var(--ink);}
   .nav-section{padding:0 16px;margin-bottom:6px;}
-  .nav-label{
-    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--ink-faint);font-weight:600;padding:14px 12px 6px;
-  }
+  .nav-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;padding:14px 12px 6px;}
   .nav a{
-    display:flex;align-items:center;gap:11px;
-    padding:9px 12px;border-radius:9px;
-    color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;
-    transition:background .15s,color .15s;
+    display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;
+    color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;transition:background .15s,color .15s;
   }
   .nav a:hover{background:var(--card);color:var(--ink);}
   .nav a.active{background:var(--ink);color:var(--paper);}
   .nav a .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-  .nav a .num{
-    font-family:'JetBrains Mono',monospace;font-size:12px;
-    color:var(--ink-faint);min-width:26px;
-  }
+  .nav a .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);min-width:26px;}
   .nav a.active .num{color:var(--paper);opacity:.7;}
 
-  /* Conteúdo principal */
   .main{flex:1;min-width:0;}
   .wrap{max-width:780px;margin:0 auto;padding:0 40px;}
 
   /* ---------- HERO ---------- */
   .hero{
-    padding:90px 0 70px;
-    border-bottom:1px solid var(--line);
+    padding:90px 0 70px;border-bottom:1px solid var(--line);
     background:
       radial-gradient(circle at 15% 20%, rgba(47,111,106,.05), transparent 40%),
       radial-gradient(circle at 85% 75%, rgba(177,78,84,.05), transparent 40%);
   }
-  .hero-eyebrow{
-    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--ink-faint);font-weight:600;margin-bottom:18px;
-  }
-  .hero h2{
-    font-family:'Fraunces',serif;font-weight:600;
-    font-size:clamp(34px,6vw,56px);line-height:1.04;
-    letter-spacing:-.02em;margin-bottom:22px;
-  }
+  .hero-eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:18px;}
+  .hero h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(34px,6vw,56px);line-height:1.04;letter-spacing:-.02em;margin-bottom:22px;}
   .hero h2 .glyphs{display:block;margin-top:10px;font-size:.62em;}
   .hero h2 b{font-weight:600;}
   .b1{color:var(--bin);} .b8{color:var(--oct);} .b10{color:var(--dec);} .b16{color:var(--hex);}
   .hero p{font-size:18px;color:var(--ink-soft);max-width:560px;}
-  .hero-meta{
-    display:flex;gap:28px;margin-top:34px;flex-wrap:wrap;
-  }
+  .hero-meta{display:flex;gap:28px;margin-top:34px;flex-wrap:wrap;}
   .hero-meta div{font-size:13.5px;color:var(--ink-soft);}
   .hero-meta b{display:block;font-family:'Fraunces',serif;font-size:22px;color:var(--ink);font-weight:600;}
 
   /* ---------- SEÇÕES ---------- */
   section{padding:64px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:20px;}
   .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;}
-  .sec-num{
-    font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;
-    color:var(--ink-faint);
-  }
-  .sec-head h3{
-    font-family:'Fraunces',serif;font-weight:600;font-size:30px;
-    letter-spacing:-.01em;line-height:1.1;
-  }
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--ink-faint);}
+  .sec-head h3{font-family:'Fraunces',serif;font-weight:600;font-size:30px;letter-spacing:-.01em;line-height:1.1;}
   .sec-lede{font-size:17px;color:var(--ink-soft);margin:14px 0 30px;}
-  section h4{
-    font-family:'Fraunces',serif;font-weight:600;font-size:20px;
-    margin:34px 0 12px;
-  }
+  section h4{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:34px 0 12px;}
   section p{margin-bottom:16px;color:var(--ink-soft);font-size:16px;}
   section p strong{color:var(--ink);font-weight:600;}
   .lead-in{color:var(--ink)!important;font-size:17px;}
 
   .callout{
-    background:var(--card);border:1px solid var(--line);
-    border-left:3px solid var(--info);
-    border-radius:var(--radius);padding:18px 22px;margin:24px 0;
-    box-shadow:var(--shadow);
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--info);
+    border-radius:var(--radius);padding:18px 22px;margin:24px 0;box-shadow:var(--shadow);
   }
   .callout p{margin:0;font-size:15.5px;}
-  .callout .tag{
-    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-    font-weight:700;color:var(--info);margin-bottom:6px;display:block;
-  }
+  .callout .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--info);margin-bottom:6px;display:block;}
 
-  .analogy{
-    background:linear-gradient(180deg,var(--dec-bg),transparent);
-    border-radius:var(--radius);padding:22px 24px;margin:24px 0;
-    border:1px solid var(--line-soft);
-  }
+  .analogy{background:linear-gradient(180deg,var(--dec-bg),transparent);border-radius:var(--radius);padding:22px 24px;margin:24px 0;border:1px solid var(--line-soft);}
   .analogy .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--dec);margin-bottom:8px;display:block;}
   .analogy p{margin:0;color:var(--ink);}
 
-  code{
-    font-family:'JetBrains Mono',monospace;font-size:.88em;
-    background:var(--paper-2);padding:2px 6px;border-radius:5px;color:var(--ink);
-  }
+  code{font-family:'JetBrains Mono',monospace;font-size:.88em;background:var(--paper-2);padding:2px 6px;border-radius:5px;color:var(--ink);}
 
-  /* Tabelas */
   .tbl-wrap{overflow-x:auto;margin:22px 0;border-radius:var(--radius);border:1px solid var(--line);}
   table{width:100%;border-collapse:collapse;background:var(--card);font-size:14.5px;}
   th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);}
-  th{
-    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
-    font-weight:700;color:var(--ink-faint);background:var(--paper-2);
-  }
+  th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ink-faint);background:var(--paper-2);}
   td{font-family:'JetBrains Mono',monospace;color:var(--ink-soft);}
   tr:last-child td{border-bottom:none;}
   .note-col{font-family:'Inter',sans-serif!important;color:var(--ink-faint);font-size:13px;}
 
-  /* Cards das 4 bases */
   .bases{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:26px 0;}
-  .base-card{
-    border-radius:var(--radius);padding:20px 22px;border:1px solid var(--line);
-    background:var(--card);box-shadow:var(--shadow);
-  }
+  .base-card{border-radius:var(--radius);padding:20px 22px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow);}
   .base-card .bn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.05em;}
   .base-card h5{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin:4px 0 2px;}
   .base-card .sym{font-size:13.5px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
   .base-card .desc{font-size:13.5px;color:var(--ink-faint);margin-top:8px;}
-  .base-card.bin{border-top:3px solid var(--bin);}
-  .base-card.bin .bn,.base-card.bin h5{color:var(--bin);}
-  .base-card.oct{border-top:3px solid var(--oct);}
-  .base-card.oct .bn,.base-card.oct h5{color:var(--oct);}
-  .base-card.dec{border-top:3px solid var(--dec);}
-  .base-card.dec .bn,.base-card.dec h5{color:var(--dec);}
-  .base-card.hex{border-top:3px solid var(--hex);}
-  .base-card.hex .bn,.base-card.hex h5{color:var(--hex);}
+  .base-card.bin{border-top:3px solid var(--bin);} .base-card.bin .bn,.base-card.bin h5{color:var(--bin);}
+  .base-card.oct{border-top:3px solid var(--oct);} .base-card.oct .bn,.base-card.oct h5{color:var(--oct);}
+  .base-card.dec{border-top:3px solid var(--dec);} .base-card.dec .bn,.base-card.dec h5{color:var(--dec);}
+  .base-card.hex{border-top:3px solid var(--hex);} .base-card.hex .bn,.base-card.hex h5{color:var(--hex);}
 
   /* ---------- INTERATIVOS ---------- */
-  .tool{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:26px;margin:28px 0;box-shadow:var(--shadow);
-  }
-  .tool-label{
-    font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
-    color:var(--info);margin-bottom:16px;display:flex;align-items:center;gap:8px;
-  }
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin:28px 0;box-shadow:var(--shadow);}
+  .tool-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--info);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
   .tool-label::before{content:"▸";font-size:13px;}
 
-  /* odômetro */
   .odo{display:flex;flex-direction:column;align-items:center;gap:18px;}
-  .odo-display{
-    display:flex;gap:6px;font-family:'JetBrains Mono',monospace;
-  }
-  .odo-digit{
-    width:54px;height:72px;border-radius:10px;background:var(--ink);
-    color:var(--paper);font-size:38px;font-weight:700;
-    display:flex;align-items:center;justify-content:center;
-    transition:background .2s;
-  }
+  .odo-display{display:flex;gap:6px;font-family:'JetBrains Mono',monospace;}
+  .odo-digit{width:54px;height:72px;border-radius:10px;background:var(--ink);color:var(--paper);font-size:38px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .2s;}
   .odo-digit.flip{animation:flip .3s;}
   @keyframes flip{0%{transform:translateY(-6px);background:var(--info);}100%{transform:translateY(0);}}
   .odo-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;}
   .odo-base-pick{display:flex;gap:6px;}
-  .odo-base-pick button{
-    font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
-    padding:7px 13px;border-radius:8px;border:1px solid var(--line);
-    background:var(--card);color:var(--ink-soft);cursor:pointer;transition:all .15s;
-  }
+  .odo-base-pick button{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;padding:7px 13px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);cursor:pointer;transition:all .15s;}
   .odo-base-pick button.on{background:var(--ink);color:var(--paper);border-color:var(--ink);}
   .odo-equiv{font-size:14px;color:var(--ink-soft);text-align:center;}
   .odo-equiv b{color:var(--ink);font-family:'JetBrains Mono',monospace;}
 
-  .btn{
-    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
-    padding:9px 18px;border-radius:9px;border:none;cursor:pointer;
-    background:var(--info);color:#fff;transition:opacity .15s,transform .1s;
-  }
-  .btn:hover{opacity:.9;}
-  .btn:active{transform:scale(.97);}
+  .btn{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;padding:9px 18px;border-radius:9px;border:none;cursor:pointer;background:var(--info);color:#fff;transition:opacity .15s,transform .1s;}
+  .btn:hover{opacity:.9;} .btn:active{transform:scale(.97);}
   .btn.ghost{background:var(--paper-2);color:var(--ink);border:1px solid var(--line);}
   .btn:focus-visible{outline:2px solid var(--info);outline-offset:2px;}
 
-  /* conversor */
   .conv-input{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap;}
   .conv-input label{font-size:14.5px;color:var(--ink-soft);font-weight:500;}
-  .conv-input input{
-    width:130px;font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;
-    padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:var(--paper);
-    color:var(--ink);
-  }
+  .conv-input input{width:130px;font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);}
   .conv-input input:focus{outline:2px solid var(--info);outline-offset:1px;border-color:var(--info);}
   .conv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:8px;}
   .conv-cell{border-radius:11px;padding:15px 17px;border:1px solid var(--line);}
@@ -262,14 +154,9 @@
   .conv-break .cl{font-size:13px;color:var(--ink-soft);margin-bottom:8px;}
   .conv-break .bits{font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.95;}
 
-  /* bits clicáveis */
   .bitrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;}
   .bit{cursor:pointer;text-align:center;user-select:none;}
-  .bit .box{
-    width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-    font-size:23px;font-weight:700;font-family:'JetBrains Mono',monospace;transition:all .15s;
-    border:1px solid var(--line);background:var(--paper-2);color:var(--ink-faint);
-  }
+  .bit .box{width:50px;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:700;font-family:'JetBrains Mono',monospace;transition:all .15s;border:1px solid var(--line);background:var(--paper-2);color:var(--ink-faint);}
   .bit.on .box{background:var(--bin-bg);border:2px solid var(--bin);color:var(--bin);}
   .bit .pv{font-size:11px;color:var(--ink-faint);margin-top:4px;font-family:'JetBrains Mono',monospace;}
   .bit-total{text-align:center;}
@@ -277,57 +164,116 @@
   .bit-total .val{font-family:'Fraunces',serif;font-size:34px;font-weight:700;color:var(--bin);}
   .bit-formula{font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--ink-soft);text-align:center;margin-top:6px;min-height:18px;}
 
-  /* potências decrescentes */
   .powers{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0;}
-  .pow{
-    background:var(--bin-bg);border:1px solid var(--bin);border-radius:10px;
-    padding:12px 16px;text-align:center;min-width:74px;
-  }
+  .pow{background:var(--bin-bg);border:1px solid var(--bin);border-radius:10px;padding:12px 16px;text-align:center;min-width:74px;}
   .pow .e{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--bin);}
   .pow .v{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-soft);margin-top:3px;}
 
-  /* ---------- EXERCÍCIOS ---------- */
-  .quiz{
+  /* ---------- EXERCÍCIOS ALEATÓRIOS ---------- */
+  .ex-header{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--ink);color:var(--paper);border-radius:var(--radius);
+    padding:18px 22px;margin-bottom:22px;gap:16px;flex-wrap:wrap;
+  }
+  .ex-header .left .label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;opacity:.55;margin-bottom:4px;}
+  .ex-header .left .val{font-family:'Fraunces',serif;font-size:18px;font-weight:600;}
+  .ex-header .right{display:flex;align-items:center;gap:10px;}
+  .ex-header .best{font-size:13px;opacity:.65;}
+  .ex-header .best b{font-family:'JetBrains Mono',monospace;opacity:1;color:var(--paper);}
+
+  .q-card{
+    background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow);transition:border-color .2s;
+  }
+  .q-card.ok{border-color:var(--bin);}
+  .q-card.no{border-color:var(--hex);}
+  .q-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+  .q-num-badge{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    background:var(--ink);color:var(--paper);border-radius:7px;padding:3px 9px;
+    flex-shrink:0;margin-top:2px;transition:background .2s;
+  }
+  .q-card.ok .q-num-badge{background:var(--bin);}
+  .q-card.no .q-num-badge{background:var(--hex);}
+  .q-cat{
+    font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    padding:3px 9px;border-radius:20px;flex-shrink:0;margin-top:3px;
+  }
+  .q-cat.bin{background:var(--bin-bg);color:var(--bin);}
+  .q-cat.oct{background:var(--oct-bg);color:var(--oct);}
+  .q-cat.hex{background:var(--hex-bg);color:var(--hex);}
+  .q-cat.con{background:var(--dec-bg);color:var(--dec);}
+  .q-text{font-size:15.5px;color:var(--ink);font-weight:500;line-height:1.5;flex:1;}
+  .q-text code{font-size:.93em;font-weight:700;}
+  .q-row{display:flex;align-items:center;gap:10px;}
+  .q-input{
+    font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;
+    width:150px;padding:9px 13px;border:1.5px solid var(--line);border-radius:9px;
+    background:var(--paper);color:var(--ink);transition:border-color .15s;
+  }
+  .q-input:focus{outline:none;border-color:var(--info);}
+  .q-input:disabled{background:var(--paper-2);color:var(--ink-soft);}
+  .q-feedback{
+    margin-top:12px;padding:10px 14px;border-radius:9px;
+    font-size:14px;font-weight:500;display:none;gap:9px;align-items:flex-start;
+  }
+  .q-feedback.ok{display:flex;background:var(--bin-bg);color:var(--bin);border:1px solid var(--bin);}
+  .q-feedback.no{display:flex;background:var(--hex-bg);color:var(--hex);border:1px solid var(--hex);}
+  .q-feedback .fi{font-size:15px;flex-shrink:0;margin-top:1px;}
+  .q-feedback .fb .sol{display:block;margin-top:3px;font-size:13px;color:var(--ink-soft);font-weight:400;}
+  .q-feedback code{background:rgba(255,255,255,.5);}
+
+  .check-bar{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 20px;margin-top:6px;
+  }
+  .btn-check{
+    font-family:'Inter',sans-serif;font-size:15px;font-weight:600;
+    padding:11px 24px;border-radius:10px;border:none;cursor:pointer;
+    background:var(--info);color:#fff;transition:opacity .15s,transform .1s;
+    box-shadow:0 2px 8px rgba(47,111,106,.22);
+  }
+  .btn-check:hover{opacity:.9;} .btn-check:active{transform:scale(.97);}
+  .btn-check:disabled{opacity:.4;cursor:default;transform:none;}
+  .btn-retry{
+    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+    padding:10px 18px;border-radius:10px;cursor:pointer;
+    background:var(--paper);color:var(--ink);border:1px solid var(--line);
+    transition:background .15s;
+  }
+  .btn-retry:hover{background:var(--card);}
+
+  .score-strip{
+    display:flex;align-items:center;gap:20px;
+    background:var(--ink);color:var(--paper);border-radius:var(--radius);
+    padding:18px 22px;margin-top:20px;flex-wrap:wrap;
+    display:none;
+  }
+  .score-strip.show{display:flex;}
+  .score-big{font-family:'Fraunces',serif;font-size:40px;font-weight:700;line-height:1;}
+  .score-sub{font-size:13px;opacity:.55;margin-top:2px;}
+  .score-pct{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;margin-left:auto;}
+  .score-msg{font-size:14px;opacity:.7;width:100%;margin-top:-4px;}
+
+  /* ---------- REFERÊNCIAS ---------- */
+  .ref-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:14px;margin-top:24px;}
+  .ref-item{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:24px 26px;margin:20px 0;box-shadow:var(--shadow);
+    padding:18px 22px;box-shadow:var(--shadow);
   }
-  .quiz-q{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;}
-  .quiz-q .qn{
-    font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
-    color:var(--paper);background:var(--ink);border-radius:6px;padding:3px 9px;flex-shrink:0;
-  }
-  .quiz-q .qt{font-size:16px;color:var(--ink);font-weight:500;}
-  .quiz-q .qt code{font-size:1em;font-weight:700;}
-  .quiz-ans{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-  .quiz-ans input{
-    width:160px;font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:600;
-    padding:9px 13px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);
-  }
-  .quiz-ans input:focus{outline:2px solid var(--info);outline-offset:1px;border-color:var(--info);}
-  .quiz-fb{margin-top:13px;font-size:14.5px;font-weight:500;display:none;border-radius:9px;padding:11px 15px;}
-  .quiz-fb.ok{display:block;background:var(--bin-bg);color:var(--bin);border:1px solid var(--bin);}
-  .quiz-fb.no{display:block;background:var(--hex-bg);color:var(--hex);border:1px solid var(--hex);}
-  .quiz-fb .sol{display:block;margin-top:6px;font-size:13.5px;color:var(--ink-soft);font-weight:400;}
-  .quiz-fb code{background:rgba(255,255,255,.5);}
+  .ref-authors{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+  .ref-title{font-size:15px;color:var(--ink-soft);font-style:italic;}
+  .ref-info{font-size:13px;color:var(--ink-faint);margin-top:4px;}
 
-  .quiz-score{
-    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:18px 24px;margin-top:24px;
-  }
-  .quiz-score .st{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
-  .quiz-score .sv{font-family:'JetBrains Mono',monospace;font-size:15px;}
-
-  /* footer */
+  /* ---------- FOOTER ---------- */
   footer{padding:48px 0 64px;text-align:center;}
   footer p{font-size:13.5px;color:var(--ink-faint);}
 
-  /* mobile */
+  /* ---------- MOBILE ---------- */
   .menu-toggle{display:none;}
   @media (max-width:920px){
-    .nav{
-      position:fixed;left:-300px;z-index:50;transition:left .25s;
-      box-shadow:0 0 40px rgba(0,0,0,.15);
-    }
+    .nav{position:fixed;left:-300px;z-index:50;transition:left .25s;box-shadow:0 0 40px rgba(0,0,0,.15);}
     .nav.open{left:0;}
     .menu-toggle{
       display:flex;align-items:center;gap:8px;position:fixed;top:16px;left:16px;z-index:60;
@@ -340,6 +286,7 @@
     .bases,.conv-grid{grid-template-columns:1fr;}
     .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:40;}
     .scrim.show{display:block;}
+    .q-top{flex-wrap:wrap;}
   }
 </style>
 </head>
@@ -359,22 +306,23 @@
     <nav>
       <div class="nav-label">Fundamentos</div>
       <div class="nav-section">
-        <a href="#intro" class="nav-link"><span class="num">00</span><span>Por onde começar</span></a>
-        <a href="#base" class="nav-link"><span class="num">01</span><span>A ideia de base</span></a>
-        <a href="#posicional" class="nav-link"><span class="num">02</span><span>Valor posicional</span></a>
+        <a href="#intro"     class="nav-link"><span class="num">00</span><span>Por onde começar</span></a>
+        <a href="#base"      class="nav-link"><span class="num">01</span><span>A ideia de base</span></a>
+        <a href="#posicional"class="nav-link"><span class="num">02</span><span>Valor posicional</span></a>
       </div>
       <div class="nav-label">As quatro bases</div>
       <div class="nav-section">
         <a href="#decimal" class="nav-link"><span class="dot" style="background:var(--dec)"></span><span>Decimal — base 10</span></a>
         <a href="#binario" class="nav-link"><span class="dot" style="background:var(--bin)"></span><span>Binário — base 2</span></a>
-        <a href="#octal" class="nav-link"><span class="dot" style="background:var(--oct)"></span><span>Octal — base 8</span></a>
-        <a href="#hex" class="nav-link"><span class="dot" style="background:var(--hex)"></span><span>Hexadecimal — base 16</span></a>
+        <a href="#octal"   class="nav-link"><span class="dot" style="background:var(--oct)"></span><span>Octal — base 8</span></a>
+        <a href="#hex"     class="nav-link"><span class="dot" style="background:var(--hex)"></span><span>Hexadecimal — base 16</span></a>
       </div>
       <div class="nav-label">Prática</div>
       <div class="nav-section">
-        <a href="#conversor" class="nav-link"><span class="num">03</span><span>Conversor universal</span></a>
-        <a href="#metodos" class="nav-link"><span class="num">04</span><span>Como converter à mão</span></a>
+        <a href="#conversor"  class="nav-link"><span class="num">03</span><span>Conversor universal</span></a>
+        <a href="#metodos"    class="nav-link"><span class="num">04</span><span>Como converter à mão</span></a>
         <a href="#exercicios" class="nav-link"><span class="num">05</span><span>Exercícios</span></a>
+        <a href="#referencias"class="nav-link"><span class="num">06</span><span>Referências</span></a>
       </div>
     </nav>
   </aside>
@@ -401,7 +349,7 @@
       <!-- 00 INTRO -->
       <section id="intro">
         <div class="sec-head"><span class="sec-num">00</span><h3>Por onde começar</h3></div>
-        <p class="sec-lede">Se este tema parece confuso, quase sempre é porque ele foi apresentado pelo meio, começando por fórmulas e potências. Vamos pelo começo de verdade.</p>
+        <p class="sec-lede">Se este tema parece confuso, quase sempre é porque foi apresentado pelo meio, começando por fórmulas e potências. Vamos pelo começo de verdade.</p>
         <p class="lead-in">Aqui vai a boa notícia: <strong>você já é especialista em um sistema de numeração</strong>. Você conta dinheiro, lê horas e preços, tudo no sistema decimal, sem nunca pensar nas regras. Aprender binário, octal e hexadecimal é só perceber que essas mesmas regras — que já estão na sua cabeça — valem para qualquer base.</p>
         <p>Existe uma única ideia central por trás de tudo. Quando ela fizer sentido, o resto se encaixa sozinho, porque tudo se apoia nela. Vamos a ela.</p>
       </section>
@@ -439,7 +387,7 @@
           </div>
         </div>
 
-        <p>Repare: o número que você vê muda completamente conforme a base, mas a <em>quantidade</em> representada é a mesma. Quatro pedras são quatro pedras — escrevê-las como <code>4</code>, <code>100</code> ou <code>11</code> é só escolher o idioma.</p>
+        <p>Repare: o número que você vê muda completamente conforme a base, mas a <em>quantidade</em> representada é a mesma. Quatro pedras são quatro pedras — escrevê-las como <code>4</code>, <code>100</code> ou <code>11</code> é só escolhar o idioma.</p>
       </section>
 
       <!-- 02 POSICIONAL -->
@@ -469,12 +417,16 @@
         <h4>Por que a casa das unidades sempre vale 1?</h4>
         <p>Porque qualquer base elevada a zero dá 1 — então a primeira casa (potência zero) sempre vale um, em todo sistema. Veja o padrão descendo: cada degrau divide por 2, e seguir esse padrão obriga <code>2⁰</code> a ser 1.</p>
         <div class="powers">
+          <div class="pow"><div class="e">2⁷</div><div class="v">128</div></div>
+          <div class="pow"><div class="e">2⁶</div><div class="v">64</div></div>
+          <div class="pow"><div class="e">2⁵</div><div class="v">32</div></div>
           <div class="pow"><div class="e">2⁴</div><div class="v">16</div></div>
           <div class="pow"><div class="e">2³</div><div class="v">8</div></div>
           <div class="pow"><div class="e">2²</div><div class="v">4</div></div>
           <div class="pow"><div class="e">2¹</div><div class="v">2</div></div>
           <div class="pow"><div class="e">2⁰</div><div class="v">1</div></div>
         </div>
+        <p style="margin-top:14px;">Esses 8 valores (1, 2, 4, 8, 16, 32, 64, 128) são as <strong>oito casas de um byte</strong>. Memorizar essa sequência é o único "truque" de todo o assunto.</p>
       </section>
 
       <!-- DECIMAL -->
@@ -499,7 +451,7 @@
 
         <p>Um computador é feito de bilhões de chavinhas elétricas (transistores). Cada uma só pode estar <strong>ligada</strong> ou <strong>desligada</strong> — como um interruptor de luz, sem meio-termo. Chamamos ligado de <code>1</code> e desligado de <code>0</code>. Por isso a base é 2, e cada dígito (0 ou 1) é um <strong>bit</strong>.</p>
 
-        <p>Como só há dois símbolos, o binário vira a casa rapidíssimo: já depois do 1. Cada posição vale uma potência de 2 — da direita para a esquerda: 1, 2, 4, 8, 16, 32…</p>
+        <p>Como só há dois símbolos, o binário vira a casa rapidíssimo: já depois do 1. Cada posição vale uma potência de 2 — da direita para a esquerda: 1, 2, 4, 8, 16, 32, 64, 128.</p>
 
         <h4>Os bits são chavinhas — experimente</h4>
         <p>Clique para ligar e desligar cada bit e veja o número decimal se formar. A soma é só das casas ligadas.</p>
@@ -515,7 +467,7 @@
 
         <div class="callout">
           <span class="tag">Conexão útil</span>
-          <p>Oito bits formam um <strong>byte</strong>. Com 8 bits, o maior número é 255 (todos ligados) e o menor é 0 — ou seja, 256 valores diferentes. Esse 255 é exatamente o valor máximo de cada cor no padrão RGB, o que liga o binário direto ao hexadecimal das cores na web.</p>
+          <p>Oito bits formam um <strong>byte</strong>. Com 8 bits, o maior número é 255 (todos ligados: 128+64+32+16+8+4+2+1) e o menor é 0 — 256 valores no total. Esse 255 é exatamente o valor máximo de cada canal de cor no padrão RGB, que liga o binário diretamente ao hexadecimal das cores na web.</p>
         </div>
 
         <div class="tbl-wrap">
@@ -524,10 +476,12 @@
             <tbody>
               <tr><td>0</td><td>0</td><td class="note-col">início</td></tr>
               <tr><td>1</td><td>1</td><td class="note-col">último símbolo da casa</td></tr>
-              <tr><td>2</td><td>10</td><td class="note-col">virou a casa</td></tr>
+              <tr><td>2</td><td>10</td><td class="note-col">virou a casa (1 grupo de 2)</td></tr>
               <tr><td>3</td><td>11</td><td class="note-col"></td></tr>
-              <tr><td>4</td><td>100</td><td class="note-col">virou de novo</td></tr>
-              <tr><td>8</td><td>1000</td><td class="note-col">virou de novo</td></tr>
+              <tr><td>4</td><td>100</td><td class="note-col">virou de novo (1 grupo de 4)</td></tr>
+              <tr><td>8</td><td>1000</td><td class="note-col">virou de novo (1 grupo de 8)</td></tr>
+              <tr><td>15</td><td>1111</td><td class="note-col">quatro casas cheias</td></tr>
+              <tr><td>16</td><td>10000</td><td class="note-col">virou para cinco casas</td></tr>
             </tbody>
           </table>
         </div>
@@ -537,11 +491,32 @@
       <section id="octal">
         <div class="sec-head"><span class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--oct)"></span><h3>Octal — base 8</h3></div>
         <p class="sec-lede">Oito símbolos (0 a 7). Existe principalmente para encurtar números binários longos.</p>
-        <p>O octal usa os símbolos de <strong>0 a 7</strong> — não existe 8 nem 9 aqui. Cada casa vale uma potência de 8. Seu grande truque: como 8 = 2³, <strong>cada dígito octal corresponde exatamente a 3 bits</strong>. Então um binário comprido vira um octal curtinho agrupando os bits de 3 em 3.</p>
+
+        <p>O octal usa os símbolos de <strong>0 a 7</strong> — não existe 8 nem 9 aqui. Cada casa vale uma potência de 8. Seu grande truque: como 8 = 2³, <strong>cada dígito octal corresponde exatamente a 3 bits</strong>. Então um binário comprido vira um octal curtinho agrupando os bits de 3 em 3 (da direita para a esquerda).</p>
+
         <div class="callout">
           <span class="tag">Por que serve</span>
           <p>O binário <code>110 101</code> tem 6 dígitos. Agrupando de 3 em 3: <code>110</code> = 6 e <code>101</code> = 5, então em octal é só <code>65</code>. Muito mais fácil de ler e anotar sem errar.</p>
         </div>
+
+        <h4>Cada grupo de 3 bits vale um dígito octal</h4>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Binário (3 bits)</th><th>Octal</th><th>Decimal</th></tr></thead>
+            <tbody>
+              <tr><td>000</td><td>0</td><td>0</td></tr>
+              <tr><td>001</td><td>1</td><td>1</td></tr>
+              <tr><td>010</td><td>2</td><td>2</td></tr>
+              <tr><td>011</td><td>3</td><td>3</td></tr>
+              <tr><td>100</td><td>4</td><td>4</td></tr>
+              <tr><td>101</td><td>5</td><td>5</td></tr>
+              <tr><td>110</td><td>6</td><td>6</td></tr>
+              <tr><td>111</td><td>7</td><td>7</td></tr>
+            </tbody>
+          </table>
+        </div>
+
         <div class="bases" style="grid-template-columns:1fr;">
           <div class="base-card oct">
             <div class="bn">BASE 8</div>
@@ -556,12 +531,21 @@
       <section id="hex">
         <div class="sec-head"><span class="dot" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--hex)"></span><h3>Hexadecimal — base 16</h3></div>
         <p class="sec-lede">Dezesseis símbolos. Como os algarismos vão só até 9, ele pede ajuda às letras.</p>
+
         <p>O hexadecimal precisa de <strong>16 símbolos</strong>, mas só temos 10 algarismos (0–9). A solução elegante: usar letras para os seis que faltam. Então <code>A</code>=10, <code>B</code>=11, <code>C</code>=12, <code>D</code>=13, <code>E</code>=14, <code>F</code>=15.</p>
-        <p>Assim como o octal agrupa 3 bits, o hex agrupa <strong>4 bits</strong> por dígito (porque 16 = 2⁴). É o jeito mais compacto e usado de escrever binário no mundo real.</p>
+
+        <p>Assim como o octal agrupa 3 bits, o hex agrupa <strong>4 bits por dígito</strong> (porque 16 = 2⁴). É o jeito mais compacto e usado de escrever binário no mundo real.</p>
+
+        <div class="callout" style="border-left-color:var(--hex);">
+          <span class="tag" style="color:var(--hex)">Agrupamento de 4 bits</span>
+          <p>Binário <code>1010 1111</code> → primeiro grupo <code>1010</code> = 10 = <code>A</code>, segundo grupo <code>1111</code> = 15 = <code>F</code> → hexadecimal <code>AF</code>. Sem passar pelo decimal. É essa compactação que torna o hex tão prático.</p>
+        </div>
+
         <div class="analogy" style="background:linear-gradient(180deg,var(--hex-bg),transparent);">
           <span class="tag" style="color:var(--hex)">Onde eles já viram isso</span>
-          <p>As cores na web são hexadecimal: <code>#FF0000</code> é vermelho puro. Cada par de dígitos controla uma cor — <code>FF</code> (que é 255, o máximo) de vermelho, <code>00</code> de verde, <code>00</code> de azul. Mude os pares e muda a cor. É hex na vida real, todo dia.</p>
+          <p>As cores na web são hexadecimal: <code>#FF0000</code> é vermelho puro. Cada par de dígitos controla uma cor — <code>FF</code> (255, o máximo) de vermelho, <code>00</code> de verde, <code>00</code> de azul. Mude os pares e muda a cor. É hex na vida real, todo dia.</p>
         </div>
+
         <div class="tbl-wrap">
           <table>
             <thead><tr><th>Decimal</th><th>Hex</th><th>Decimal</th><th>Hex</th></tr></thead>
@@ -601,7 +585,7 @@
       <!-- MÉTODOS -->
       <section id="metodos">
         <div class="sec-head"><span class="sec-num">04</span><h3>Como converter à mão</h3></div>
-        <p class="sec-lede">Os dois caminhos que mais aparecem em prova, passo a passo.</p>
+        <p class="sec-lede">Os três caminhos que mais aparecem em prova, passo a passo.</p>
 
         <h4>Decimal → Binário: divisões sucessivas</h4>
         <p>Divida o número por 2 repetidamente, anotando o resto de cada divisão (sempre 0 ou 1). Pare quando chegar a zero e <strong>leia os restos de baixo para cima</strong>. Exemplo com o 13:</p>
@@ -619,29 +603,64 @@
         <p>Lendo de baixo para cima: <code>1101</code>. Conferindo: 8 + 4 + 0 + 1 = 13. ✓</p>
 
         <h4>Binário → Decimal: soma das potências</h4>
-        <p>Escreva o valor de cada casa (1, 2, 4, 8…) sobre cada bit e some só onde há 1. Para <code>1011</code>: 8 + 0 + 2 + 1 = <strong>11</strong>. É o que a calculadora de bits lá em cima faz visualmente.</p>
+        <p>Escreva o valor de cada casa (1, 2, 4, 8, 16, 32…) sobre cada bit e some só onde há 1. Para <code>1011</code>: 8 + 0 + 2 + 1 = <strong>11</strong>. É o que a calculadora de bits lá em cima faz visualmente.</p>
+
+        <h4>Decimal → Hexadecimal: divisões por 16</h4>
+        <p>O mesmo processo, mas dividindo por 16. Restos maiores que 9 são convertidos em letra (10→A, 11→B… 15→F). Exemplo com o 255:</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Divisão</th><th>Resultado</th><th>Resto</th></tr></thead>
+            <tbody>
+              <tr><td>255 ÷ 16</td><td>15</td><td><strong>15 = F</strong></td></tr>
+              <tr><td>15 ÷ 16</td><td>0</td><td><strong>15 = F</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Lendo de baixo para cima: <code>FF</code>. Confirma com o conversor: 255₁₀ = FF₁₆. ✓</p>
 
         <div class="callout">
           <span class="tag">Atalhos binário ↔ octal ↔ hex</span>
-          <p>Para octal, agrupe os bits de <strong>3 em 3</strong> (da direita pra esquerda). Para hexadecimal, agrupe de <strong>4 em 4</strong>. Cada grupo vira um único dígito. Não precisa passar pelo decimal no meio.</p>
+          <p>Para octal, agrupe os bits de <strong>3 em 3</strong> (da direita pra esquerda). Para hexadecimal, agrupe de <strong>4 em 4</strong>. Cada grupo vira um único dígito. Não precisa passar pelo decimal no meio — é o caminho mais rápido.</p>
         </div>
       </section>
 
       <!-- EXERCÍCIOS -->
       <section id="exercicios">
         <div class="sec-head"><span class="sec-num">05</span><h3>Exercícios</h3></div>
-        <p class="sec-lede">Resolva e clique em conferir. A correção é na hora, com a resposta certa quando você erra.</p>
+        <p class="sec-lede">10 questões sorteadas de um banco de 50. Responda tudo e confira de uma vez. Clique em <strong>Nova tentativa</strong> para um novo conjunto.</p>
 
-        <div class="quiz" id="quiz">
-          <!-- preenchido via JS -->
+        <!-- cabeçalho da rodada -->
+        <div class="ex-header">
+          <div class="left">
+            <div class="label">Tentativa</div>
+            <div class="val" id="attemptLabel">1 de muitas — bora lá!</div>
+          </div>
+          <div class="right">
+            <span class="best">Melhor: <b id="bestScore">—</b></span>
+          </div>
         </div>
 
-        <div class="quiz-score" id="quizScore">
-          <span class="st">Confira suas respostas acima</span>
-          <span class="sv" id="quizScoreVal">0 / 0 corretas</span>
+        <!-- lista de questões -->
+        <div id="qList"></div>
+
+        <!-- barra de ação -->
+        <div class="check-bar">
+          <button class="btn-check" id="btnCheck" onclick="checkAll()">Conferir tudo</button>
+          <button class="btn-retry" id="btnRetry" onclick="retry()" style="display:none">↺ Nova tentativa</button>
+        </div>
+
+        <!-- painel de pontuação -->
+        <div class="score-strip" id="scoreStrip">
+          <div>
+            <div class="score-big" id="scoreNum">—</div>
+            <div class="score-sub">certas de 10</div>
+          </div>
+          <div class="score-pct" id="scorePct"></div>
+          <div class="score-msg" id="scoreMsg"></div>
         </div>
       </section>
 
+      <!-- CTA entrega -->
       <div style="
         background:linear-gradient(135deg,var(--dec-bg),var(--bin-bg));
         border:1.5px solid var(--dec);border-radius:var(--radius);
@@ -664,6 +683,45 @@
         </a>
       </div>
 
+      <!-- REFERÊNCIAS -->
+      <section id="referencias">
+        <div class="sec-head"><span class="sec-num">06</span><h3>Referências</h3></div>
+        <p class="sec-lede">Obras publicadas no Brasil para aprofundar o estudo de sistemas de numeração, eletrônica digital e organização de computadores.</p>
+
+        <ul class="ref-list">
+          <li class="ref-item">
+            <div class="ref-authors">IDOETA, Ivan Valeije; CAPUANO, Francisco Gabriel.</div>
+            <div class="ref-title">Elementos de Eletrônica Digital.</div>
+            <div class="ref-info">40. ed. São Paulo: Érica, 2007. — A obra de referência para sistemas digitais no Brasil. O capítulo sobre sistemas de numeração cobre binário, octal e hexadecimal com profundidade.</div>
+          </li>
+          <li class="ref-item">
+            <div class="ref-authors">MONTEIRO, Mário A.</div>
+            <div class="ref-title">Introdução à Organização de Computadores.</div>
+            <div class="ref-info">5. ed. Rio de Janeiro: LTC, 2007. — Explica como os computadores representam dados internamente, com capítulo dedicado a sistemas numéricos e aritmética binária.</div>
+          </li>
+          <li class="ref-item">
+            <div class="ref-authors">TOCCI, Ronald J.; WIDMER, Neal S.; MOSS, Greg L.</div>
+            <div class="ref-title">Sistemas Digitais: Princípios e Aplicações.</div>
+            <div class="ref-info">11. ed. São Paulo: Pearson, 2011. — Tradução amplamente adotada em cursos técnicos e superiores brasileiros. Traz exercícios extensos de conversão entre bases.</div>
+          </li>
+          <li class="ref-item">
+            <div class="ref-authors">TORRES, Gabriel.</div>
+            <div class="ref-title">Hardware: Curso Completo.</div>
+            <div class="ref-info">4. ed. Rio de Janeiro: Axcel Books, 2001. — Aborda sistemas de numeração em linguagem acessível, conectando a teoria ao funcionamento real do hardware.</div>
+          </li>
+          <li class="ref-item">
+            <div class="ref-authors">MANZANO, José Augusto N. G.; OLIVEIRA, Jayr Figueiredo de.</div>
+            <div class="ref-title">Algoritmos: Lógica para Desenvolvimento de Programação de Computadores.</div>
+            <div class="ref-info">28. ed. São Paulo: Érica, 2016. — Contextualiza a representação binária no desenvolvimento de software, útil para quem quer conectar numeração à programação.</div>
+          </li>
+          <li class="ref-item">
+            <div class="ref-authors">FORBELLONE, André Luiz Villar; EBERSPÄCHER, Henri Frederico.</div>
+            <div class="ref-title">Lógica de Programação: A Construção de Algoritmos e Estruturas de Dados.</div>
+            <div class="ref-info">3. ed. São Paulo: Pearson, 2005. — Introduz a lógica computacional incluindo a representação de dados em diferentes bases numéricas.</div>
+          </li>
+        </ul>
+      </section>
+
       <footer>
         <p>Material didático de apoio · Sistemas de Numeração · uso livre em sala de aula</p>
       </footer>
@@ -680,7 +738,7 @@ function toggleNav(){
 }
 document.querySelectorAll('.nav-link').forEach(function(a){
   a.addEventListener('click',function(){
-    if(window.innerWidth<=920){toggleNav();}
+    if(window.innerWidth<=920){ toggleNav(); }
   });
 });
 
@@ -701,7 +759,6 @@ secs.forEach(function(s){spy.observe(s);});
 
 /* ===== ODÔMETRO ===== */
 var odoBase=10, odoVal=4;
-var DIGITS="0123456789ABCDEF";
 function odoRender(prevStr){
   var s=odoVal.toString(odoBase).toUpperCase();
   while(s.length<4) s="0"+s;
@@ -726,7 +783,7 @@ function odoStep(n){
 }
 function odoReset(){odoVal=0;odoRender();}
 document.getElementById('odoBase').addEventListener('click',function(e){
-  if(e.target.tagName!=='BUTTON')return;
+  if(e.target.tagName!=='BUTTON') return;
   document.querySelectorAll('#odoBase button').forEach(function(b){b.classList.remove('on');});
   e.target.classList.add('on');
   odoBase=parseInt(e.target.dataset.b);
@@ -761,7 +818,7 @@ function sup(n){return String(n).split('').map(function(d){return SUP[d];}).join
 function convRun(){
   var inp=document.getElementById('convDec');
   var n=parseInt(inp.value);
-  if(isNaN(n)||n<0)n=0;
+  if(isNaN(n)||n<0) n=0;
   if(n>65535){n=65535;inp.value=65535;}
   document.getElementById('cvDec').textContent=n;
   document.getElementById('cvBin').textContent=n.toString(2);
@@ -780,74 +837,172 @@ function convRun(){
 document.getElementById('convDec').addEventListener('input',convRun);
 convRun();
 
-/* ===== EXERCÍCIOS ===== */
-var QUESTIONS=[
-  {t:'Converta o binário <code>101</code> para decimal.', a:'5', base:'dec', sol:'4 + 0 + 1 = 5'},
-  {t:'Converta o decimal <code>10</code> para binário.', a:'1010', base:'bin', sol:'8 + 0 + 2 + 0 = 10, ou seja 1010'},
-  {t:'Quanto vale o dígito hexadecimal <code>C</code> em decimal?', a:'12', base:'dec', sol:'A=10, B=11, C=12'},
-  {t:'Converta o binário <code>1111</code> para decimal.', a:'15', base:'dec', sol:'8 + 4 + 2 + 1 = 15'},
-  {t:'Converta o decimal <code>8</code> para octal.', a:'10', base:'oct', sol:'O octal vira a casa no 8, então 8 = 10'},
-  {t:'Em RGB, qual o valor decimal do par hex <code>FF</code>?', a:'255', base:'dec', sol:'F=15: 15×16 + 15 = 255, o máximo de uma cor'},
-  {t:'Converta o decimal <code>13</code> para binário.', a:'1101', base:'bin', sol:'Divisões por 2: restos 1,0,1,1 lidos de baixo p/ cima = 1101'},
-  {t:'Converta o decimal <code>26</code> para hexadecimal.', a:'1A', base:'hex', sol:'26 = 16 + 10 = 1 e A, ou seja 1A'}
+/* ===================================================================
+   EXERCÍCIOS ALEATÓRIOS — banco de 50 questões, 10 por rodada
+   =================================================================== */
+var BANK = [
+  /* Binário → Decimal */
+  {cat:'bin', t:'Converta o binário <code>10</code> para decimal.',    a:'2',  sol:'2¹ = 2'},
+  {cat:'bin', t:'Converta o binário <code>11</code> para decimal.',    a:'3',  sol:'2¹ + 2⁰ = 2 + 1 = 3'},
+  {cat:'bin', t:'Converta o binário <code>100</code> para decimal.',   a:'4',  sol:'2² = 4'},
+  {cat:'bin', t:'Converta o binário <code>101</code> para decimal.',   a:'5',  sol:'2² + 2⁰ = 4 + 1 = 5'},
+  {cat:'bin', t:'Converta o binário <code>110</code> para decimal.',   a:'6',  sol:'2² + 2¹ = 4 + 2 = 6'},
+  {cat:'bin', t:'Converta o binário <code>111</code> para decimal.',   a:'7',  sol:'4 + 2 + 1 = 7'},
+  {cat:'bin', t:'Converta o binário <code>1000</code> para decimal.',  a:'8',  sol:'2³ = 8'},
+  {cat:'bin', t:'Converta o binário <code>1010</code> para decimal.',  a:'10', sol:'8 + 0 + 2 + 0 = 10'},
+  {cat:'bin', t:'Converta o binário <code>1100</code> para decimal.',  a:'12', sol:'8 + 4 = 12'},
+  {cat:'bin', t:'Converta o binário <code>1111</code> para decimal.',  a:'15', sol:'8 + 4 + 2 + 1 = 15'},
+  {cat:'bin', t:'Converta o binário <code>10000</code> para decimal.', a:'16', sol:'2⁴ = 16'},
+  {cat:'bin', t:'Converta o binário <code>10001</code> para decimal.', a:'17', sol:'16 + 1 = 17'},
+  {cat:'bin', t:'Converta o binário <code>10110</code> para decimal.', a:'22', sol:'16 + 4 + 2 = 22'},
+  {cat:'bin', t:'Converta o binário <code>11001</code> para decimal.', a:'25', sol:'16 + 8 + 1 = 25'},
+  {cat:'bin', t:'Converta o binário <code>11111</code> para decimal.', a:'31', sol:'16 + 8 + 4 + 2 + 1 = 31'},
+  /* Decimal → Binário */
+  {cat:'bin', t:'Converta o decimal <code>2</code> para binário.',   a:'10',    sol:'2 = 2¹ → 10'},
+  {cat:'bin', t:'Converta o decimal <code>5</code> para binário.',   a:'101',   sol:'5 = 4 + 1 → 101'},
+  {cat:'bin', t:'Converta o decimal <code>6</code> para binário.',   a:'110',   sol:'6 = 4 + 2 → 110'},
+  {cat:'bin', t:'Converta o decimal <code>7</code> para binário.',   a:'111',   sol:'7 = 4 + 2 + 1 → 111'},
+  {cat:'bin', t:'Converta o decimal <code>9</code> para binário.',   a:'1001',  sol:'9 = 8 + 1 → 1001'},
+  {cat:'bin', t:'Converta o decimal <code>10</code> para binário.',  a:'1010',  sol:'10 = 8 + 2 → 1010'},
+  {cat:'bin', t:'Converta o decimal <code>12</code> para binário.',  a:'1100',  sol:'12 = 8 + 4 → 1100'},
+  {cat:'bin', t:'Converta o decimal <code>13</code> para binário.',  a:'1101',  sol:'13 = 8 + 4 + 1 → 1101'},
+  {cat:'bin', t:'Converta o decimal <code>14</code> para binário.',  a:'1110',  sol:'14 = 8 + 4 + 2 → 1110'},
+  {cat:'bin', t:'Converta o decimal <code>16</code> para binário.',  a:'10000', sol:'16 = 2⁴ → 10000'},
+  /* Hexadecimal: dígitos-letra */
+  {cat:'hex', t:'Qual o valor decimal do dígito hexadecimal <code>A</code>?', a:'10', sol:'A é o décimo símbolo: A = 10'},
+  {cat:'hex', t:'Qual o valor decimal do dígito hexadecimal <code>B</code>?', a:'11', sol:'B = 11'},
+  {cat:'hex', t:'Qual o valor decimal do dígito hexadecimal <code>C</code>?', a:'12', sol:'C = 12'},
+  {cat:'hex', t:'Qual o valor decimal do dígito hexadecimal <code>D</code>?', a:'13', sol:'D = 13'},
+  {cat:'hex', t:'Qual o valor decimal do dígito hexadecimal <code>E</code>?', a:'14', sol:'E = 14'},
+  {cat:'hex', t:'Qual o valor decimal do dígito hexadecimal <code>F</code>?', a:'15', sol:'F é o maior símbolo do hex: F = 15'},
+  /* Decimal → Octal */
+  {cat:'oct', t:'Converta o decimal <code>7</code> para octal.',  a:'7',   sol:'7 existe no octal (0 a 7): 7₈ = 7'},
+  {cat:'oct', t:'Converta o decimal <code>8</code> para octal.',  a:'10',  sol:'8 é a base do octal → vira a casa: 10₈'},
+  {cat:'oct', t:'Converta o decimal <code>9</code> para octal.',  a:'11',  sol:'9 = 8 + 1 → 11₈'},
+  {cat:'oct', t:'Converta o decimal <code>15</code> para octal.', a:'17',  sol:'15 = 8 + 7 → 17₈'},
+  {cat:'oct', t:'Converta o decimal <code>16</code> para octal.', a:'20',  sol:'16 = 2 × 8 → 20₈'},
+  {cat:'oct', t:'Converta o decimal <code>24</code> para octal.', a:'30',  sol:'24 = 3 × 8 → 30₈'},
+  {cat:'oct', t:'Converta o decimal <code>64</code> para octal.', a:'100', sol:'64 = 8² → 100₈'},
+  /* Decimal → Hexadecimal */
+  {cat:'hex', t:'Converta o decimal <code>10</code> para hexadecimal.',  a:'A',  sol:'10 é representado pela letra A no hex'},
+  {cat:'hex', t:'Converta o decimal <code>11</code> para hexadecimal.',  a:'B',  sol:'B = 11 no hexadecimal'},
+  {cat:'hex', t:'Converta o decimal <code>15</code> para hexadecimal.',  a:'F',  sol:'F é o último símbolo: F = 15'},
+  {cat:'hex', t:'Converta o decimal <code>16</code> para hexadecimal.',  a:'10', sol:'16 é a base do hex → vira a casa: 10₁₆'},
+  {cat:'hex', t:'Converta o decimal <code>26</code> para hexadecimal.',  a:'1A', sol:'26 = 16 + 10 → 1 e A → 1A'},
+  {cat:'hex', t:'Converta o decimal <code>31</code> para hexadecimal.',  a:'1F', sol:'31 = 16 + 15 → 1 e F → 1F'},
+  {cat:'hex', t:'Converta o decimal <code>255</code> para hexadecimal.', a:'FF', sol:'255 = 15×16 + 15 → F e F → FF'},
+  /* Hexadecimal → Decimal */
+  {cat:'hex', t:'Converta o hexadecimal <code>10</code> para decimal.', a:'16',  sol:'1×16 + 0 = 16'},
+  {cat:'hex', t:'Converta o hexadecimal <code>1A</code> para decimal.', a:'26',  sol:'1×16 + 10 = 26'},
+  {cat:'hex', t:'Converta o hexadecimal <code>FF</code> para decimal.', a:'255', sol:'15×16 + 15 = 255'},
+  /* Conceitual */
+  {cat:'con', t:'Quantos bits tem 1 byte?',                                            a:'8',   sol:'Por definição: 1 byte = 8 bits'},
+  {cat:'con', t:'Qual o maior valor que 8 bits podem representar?',                    a:'255', sol:'128+64+32+16+8+4+2+1 = 255'},
+  {cat:'con', t:'Quantos símbolos o sistema binário utiliza?',                         a:'2',   sol:'Binário usa apenas 0 e 1'},
+  {cat:'con', t:'Quantos símbolos o sistema hexadecimal utiliza?',                     a:'16',  sol:'Hex usa 0-9 e A-F: 16 símbolos'},
+  {cat:'con', t:'Quantos símbolos o sistema octal utiliza?',                           a:'8',   sol:'Octal usa os símbolos de 0 a 7'},
+  {cat:'con', t:'Qual o valor de 2⁴?',                                                 a:'16',  sol:'2⁴ = 16. Cada dígito hex agrupa exatamente 4 bits'},
+  {cat:'con', t:'Qual o valor de 2⁸?',                                                 a:'256', sol:'2⁸ = 256 combinações possíveis com 8 bits (0 a 255)'},
+  {cat:'con', t:'Em RGB, as cores vão de 0 a 255. Quantos bits são usados por canal?', a:'8',   sol:'0 a 255 = 256 valores = 2⁸ → 8 bits por canal de cor'}
 ];
-function norm(s){return (s||'').toString().trim().toUpperCase().replace(/^0X/,'').replace(/^#/,'');}
-var quizState=[];
-function quizRender(){
-  var q=document.getElementById('quiz');
-  q.innerHTML='';
-  QUESTIONS.forEach(function(item,i){
-    quizState[i]=quizState[i]||{done:false,ok:false};
-    var div=document.createElement('div');
-    div.className='quiz-q-block';
-    div.style.cssText='padding:16px 0;border-bottom:1px solid var(--line-soft);';
-    if(i===QUESTIONS.length-1) div.style.borderBottom='none';
-    div.innerHTML=
-      '<div class="quiz-q"><span class="qn">'+(i+1)+'</span><span class="qt">'+item.t+'</span></div>'+
-      '<div class="quiz-ans">'+
-        '<input type="text" id="qi'+i+'" placeholder="sua resposta" autocomplete="off">'+
-        '<button class="btn" onclick="quizCheck('+i+')">Conferir</button>'+
-      '</div>'+
-      '<div class="quiz-fb" id="qf'+i+'"></div>';
-    q.appendChild(div);
-  });
-  quizScore();
-}
-function quizCheck(i){
-  var inp=document.getElementById('qi'+i);
-  var fb=document.getElementById('qf'+i);
-  var correct=norm(QUESTIONS[i].a);
-  var given=norm(inp.value);
-  if(given===''){return;}
-  if(given===correct){
-    fb.className='quiz-fb ok';
-    fb.innerHTML='✓ Correto! '+'<span class="sol">'+QUESTIONS[i].sol+'</span>';
-    quizState[i]={done:true,ok:true};
-  }else{
-    fb.className='quiz-fb no';
-    fb.innerHTML='✗ Ainda não. A resposta é <code>'+QUESTIONS[i].a+'</code>.<span class="sol">'+QUESTIONS[i].sol+'</span>';
-    quizState[i]={done:true,ok:false};
+
+var CAT_LABEL = {bin:'Binário', oct:'Octal', hex:'Hexadecimal', con:'Conceitual'};
+var attempt = 0, best = null, current = [], checked = false;
+
+function norm(s){ return (s||'').toString().trim().toUpperCase().replace(/^0X/,'').replace(/^#/,''); }
+
+function pickRandom(n){
+  var pool=BANK.slice();
+  for(var i=pool.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=pool[i]; pool[i]=pool[j]; pool[j]=t;
   }
-  quizScore();
+  return pool.slice(0,n);
 }
-function quizScore(){
-  var done=quizState.filter(function(s){return s&&s.done;}).length;
-  var ok=quizState.filter(function(s){return s&&s.ok;}).length;
-  document.getElementById('quizScoreVal').textContent=ok+' / '+QUESTIONS.length+' corretas';
-  var st=document.querySelector('#quizScore .st');
-  if(done===0) st.textContent='Confira suas respostas acima';
-  else if(ok===QUESTIONS.length) st.textContent='Excelente! Gabaritou 🎉';
-  else if(done===QUESTIONS.length) st.textContent='Tudo conferido — revise as que errou';
-  else st.textContent='Continue resolvendo…';
+
+function render(){
+  checked = false;
+  current = pickRandom(10);
+  attempt++;
+  var msgs=['bora lá!','vai que vai!','mais 10 — consegue?','mostrando que aprendeu!','dominando o conteúdo!'];
+  document.getElementById('attemptLabel').textContent=attempt+' — '+msgs[Math.min(attempt-1,msgs.length-1)];
+  document.getElementById('btnCheck').disabled=false;
+  document.getElementById('btnRetry').style.display='none';
+  document.getElementById('scoreStrip').classList.remove('show');
+
+  var list=document.getElementById('qList');
+  list.innerHTML='';
+  current.forEach(function(q,i){
+    var c=document.createElement('div');
+    c.className='q-card'; c.id='qc'+i;
+    c.innerHTML=
+      '<div class="q-top">'+
+        '<span class="q-num-badge" id="qn'+i+'">'+(i+1)+'</span>'+
+        '<span class="q-cat '+q.cat+'">'+CAT_LABEL[q.cat]+'</span>'+
+        '<span class="q-text">'+q.t+'</span>'+
+      '</div>'+
+      '<div class="q-row">'+
+        '<input class="q-input" id="qi'+i+'" type="text" placeholder="sua resposta" autocomplete="off">'+
+      '</div>'+
+      '<div class="q-feedback" id="qf'+i+'"></div>';
+    list.appendChild(c);
+  });
 }
-// permitir Enter para conferir
+
+function checkAll(){
+  if(checked) return;
+  checked=true;
+  document.getElementById('btnCheck').disabled=true;
+  document.getElementById('btnRetry').style.display='';
+
+  var ok=0;
+  current.forEach(function(q,i){
+    var inp=document.getElementById('qi'+i);
+    var given=norm(inp.value);
+    var correct=norm(q.a);
+    var isOk=given===correct;
+    if(isOk) ok++;
+    inp.disabled=true;
+    var card=document.getElementById('qc'+i);
+    card.classList.add(isOk?'ok':'no');
+    var fb=document.getElementById('qf'+i);
+    if(isOk){
+      fb.className='q-feedback ok';
+      fb.innerHTML='<span class="fi">✓</span><span class="fb">Correto! <span class="sol">'+q.sol+'</span></span>';
+    } else {
+      fb.className='q-feedback no';
+      fb.innerHTML='<span class="fi">✗</span><span class="fb">Sua resposta: <code>'+(inp.value||'—')+'</code> · Correta: <code>'+q.a+'</code><span class="sol">'+q.sol+'</span></span>';
+    }
+  });
+
+  if(best===null||ok>best) best=ok;
+  document.getElementById('bestScore').textContent=best+'/10';
+  document.getElementById('scoreNum').textContent=ok;
+  document.getElementById('scorePct').textContent=Math.round(ok/10*100)+'%';
+  var msgs=['Continue praticando — você consegue!','Quase lá, tente outra rodada!','Bom desempenho!','Muito bem! Pratique mais uma vez.','Excelente! Você dominou o conteúdo!'];
+  var pct=ok/10;
+  document.getElementById('scoreMsg').textContent=pct>=1?msgs[4]:pct>=.8?msgs[3]:pct>=.6?msgs[2]:pct>=.4?msgs[1]:msgs[0];
+  document.getElementById('scoreStrip').classList.add('show');
+  document.getElementById('scoreStrip').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function retry(){
+  render();
+  document.getElementById('exercicios').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 document.addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&e.target.id&&e.target.id.indexOf('qi')===0){
-    quizCheck(parseInt(e.target.id.replace('qi','')));
+  if(e.key==='Enter'&&e.target.classList.contains('q-input')){
+    var idx=parseInt(e.target.id.replace('qi',''));
+    var next=document.getElementById('qi'+(idx+1));
+    if(next) next.focus();
+    else checkAll();
   }
 });
-quizRender();
+
+render();
 </script>
+<script src="../assets/disciplinas.js"></script>
 <script src="../assets/shell.js" data-base="../"></script>
 </body>
 </html>
