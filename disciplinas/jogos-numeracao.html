@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogos — Sistemas de Numeração</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .game-hero{
+    padding:44px 0 36px;border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(ellipse 60% 60% at 0% 50%,rgba(122,94,168,.07),transparent),
+      radial-gradient(ellipse 50% 50% at 100% 50%,rgba(177,78,84,.05),transparent);
+  }
+  .game-hero h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(26px,4.5vw,40px);letter-spacing:-.02em;margin-bottom:10px;}
+  .game-hero p{font-size:15.5px;color:var(--ink-soft);}
+
+  /* TABS */
+  .tab-bar{display:flex;gap:4px;border-bottom:1.5px solid var(--line);background:var(--paper-2);padding:12px 20px 0;overflow-x:auto;}
+  .tab-btn{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;padding:9px 18px;border:none;border-radius:10px 10px 0 0;cursor:pointer;background:transparent;color:var(--ink-soft);border-bottom:2.5px solid transparent;transition:color .15s,background .15s;white-space:nowrap;}
+  .tab-btn:hover{background:var(--card);color:var(--ink);}
+  .tab-btn.active{background:var(--card);color:var(--ink);border-bottom-color:var(--ink);}
+  .tab-panel{display:none;padding:36px 24px 60px;}
+  .tab-panel.active{display:block;}
+
+  .game-wrap{max-width:680px;margin:0 auto;}
+  .game-title{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-bottom:6px;}
+  .game-desc{font-size:14.5px;color:var(--ink-soft);margin-bottom:22px;}
+  .game-status{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:11px 18px;margin-bottom:20px;font-size:14px;font-weight:600;color:var(--ink-soft);}
+  .game-status b{color:var(--ink);}
+  .game-btn{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;padding:9px 20px;border-radius:9px;border:none;cursor:pointer;background:var(--ink);color:var(--paper);transition:opacity .15s;}
+  .game-btn:hover{opacity:.85;}
+  .game-btn.ghost{background:var(--paper-2);color:var(--ink);border:1px solid var(--line);}
+  .win-banner{background:var(--bin-bg);border:1.5px solid var(--bin);border-radius:var(--radius);padding:18px 22px;text-align:center;margin-top:18px;display:none;}
+  .win-banner.show{display:block;}
+  .win-banner .wt{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--bin);}
+  .win-banner .ws{font-size:14px;color:var(--ink-soft);margin-top:4px;}
+
+  /* MEMÓRIA */
+  .memo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+  .memo-card{aspect-ratio:1;cursor:pointer;perspective:700px;border-radius:12px;user-select:none;}
+  .memo-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .4s;}
+  .memo-card.flipped .memo-inner,.memo-card.matched .memo-inner{transform:rotateY(180deg);}
+  .memo-face{position:absolute;inset:0;border-radius:12px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+  .memo-front{background:var(--ink);}
+  .memo-front .qmark{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:rgba(246,244,238,.2);}
+  .memo-back{background:var(--card);border:2px solid var(--bin);transform:rotateY(180deg);font-family:'JetBrains Mono',monospace;font-size:clamp(13px,2.5vw,17px);font-weight:700;color:var(--bin);padding:6px;text-align:center;}
+  .memo-card.matched .memo-back{border-color:var(--bin);background:var(--bin-bg);}
+
+  /* CAÇA-PALAVRAS */
+  .ws-outer{overflow-x:auto;}
+  .ws-grid{display:inline-grid;gap:3px;margin-bottom:18px;}
+  .ws-cell{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;cursor:pointer;background:var(--paper-2);color:var(--ink);transition:background .1s;user-select:none;border:1px solid transparent;}
+  .ws-cell:hover{background:var(--card);border-color:var(--line);}
+  .ws-cell.sel{background:var(--dec-bg);color:var(--dec);border-color:var(--dec);}
+  .ws-cell.f1{background:#bde8e4;color:var(--bin);}
+  .ws-cell.f2{background:#d4cce8;color:var(--oct);}
+  .ws-cell.f3{background:#f3dec5;color:var(--dec);}
+  .ws-cell.f4{background:#f0cece;color:var(--hex);}
+  .ws-cell.f5{background:#b8dfe4;color:#207080;}
+  .ws-cell.f6{background:#dde8b8;color:#5a7a2a;}
+  .ws-cell.f7{background:#e8d8b8;color:#7a5020;}
+  .ws-words{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .ws-word{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;padding:4px 12px;border-radius:20px;background:var(--paper-2);color:var(--ink-soft);border:1px solid var(--line);}
+  .ws-word.found{text-decoration:line-through;opacity:.45;}
+
+  /* CRUZADINHA */
+  .cw-outer{overflow-x:auto;margin-bottom:22px;}
+  .cw-grid{display:inline-grid;gap:3px;}
+  .cw-cell{width:36px;height:36px;position:relative;}
+  .cw-cell input{width:100%;height:100%;border:1.5px solid var(--line);border-radius:5px;background:var(--card);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;text-align:center;text-transform:uppercase;padding:0;cursor:pointer;}
+  .cw-cell input:focus{outline:none;border-color:var(--info);background:var(--bin-bg);}
+  .cw-cell input.ok{background:var(--bin-bg)!important;border-color:var(--bin)!important;color:var(--bin)!important;}
+  .cw-cell input.err{background:var(--hex-bg)!important;border-color:var(--hex)!important;color:var(--hex)!important;}
+  .cw-cell .cn{position:absolute;top:2px;left:3px;font-size:8px;font-weight:700;color:var(--ink-faint);line-height:1;pointer-events:none;z-index:1;}
+  .cw-black{width:36px;height:36px;background:var(--ink);border-radius:5px;}
+  .cw-clues{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;}
+  .cw-clues h4{font-family:'Fraunces',serif;font-size:15px;font-weight:600;margin-bottom:10px;}
+  .cw-clue{font-size:13.5px;color:var(--ink-soft);margin-bottom:7px;}
+  .cw-clue b{color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;}
+  .cw-actions{display:flex;gap:10px;margin-left:auto;}
+
+  /* RELACIONAR */
+  .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+  .match-col .col-lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink-faint);margin-bottom:8px;}
+  .match-col{display:flex;flex-direction:column;}
+  .match-items{display:flex;flex-direction:column;gap:8px;}
+  .match-item{padding:13px 14px;border-radius:11px;border:1.5px solid var(--line);background:var(--card);font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;cursor:pointer;text-align:center;transition:all .15s;user-select:none;}
+  .match-item:hover{border-color:var(--ink-soft);background:var(--paper-2);}
+  .match-item.sel{border-color:var(--info);background:var(--bin-bg);color:var(--bin);}
+  .match-item.ok{border-color:var(--bin);background:var(--bin-bg);color:var(--bin);pointer-events:none;}
+  .match-item.err{border-color:var(--hex);background:var(--hex-bg);color:var(--hex);}
+  .match-timer{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--dec);}
+
+  @media(max-width:540px){
+    .cw-clues{grid-template-columns:1fr;}
+    .match-item{font-size:13px;padding:10px 10px;}
+    .ws-cell{width:27px;height:27px;font-size:12px;}
+    .memo-grid{gap:6px;}
+  }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<nav class="crumbs">
+  <a href="../index.html">Início</a><span>›</span>
+  <a href="sistemas-operacionais.html">Sistemas Operacionais</a><span>›</span>
+  <a href="sistemas-numeracao.html">Sistemas de Numeração</a><span>›</span>
+  Jogos
+</nav>
+
+<div class="game-hero">
+  <div class="container">
+    <span class="eyebrow" style="margin-bottom:12px;display:block;">Jogos · Sistemas de Numeração</span>
+    <h1>Aprenda jogando</h1>
+    <p>Quatro jogos interativos para fixar binário, octal, decimal e hexadecimal de forma lúdica.</p>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="tab('memoria',this)">🃏 Memória</button>
+  <button class="tab-btn"        onclick="tab('caca',this)">🔍 Caça-palavras</button>
+  <button class="tab-btn"        onclick="tab('cruz',this)">📐 Cruzadinha</button>
+  <button class="tab-btn"        onclick="tab('rel',this)">🔗 Relacionar</button>
+</div>
+
+<!-- ========== MEMÓRIA ========== -->
+<div class="tab-panel active" id="panel-memoria">
+<div class="game-wrap">
+  <div class="game-title">Jogo da Memória</div>
+  <div class="game-desc">Vire duas cartas por vez. Cada número decimal tem seu equivalente em outra base esperando por você.</div>
+  <div class="game-status">
+    <span>Pares: <b id="mPar">0 / 8</b></span>
+    <span>Jogadas: <b id="mJog">0</b></span>
+    <button class="game-btn ghost" onclick="mInit()">↺ Reiniciar</button>
+  </div>
+  <div class="memo-grid" id="mGrid"></div>
+  <div class="win-banner" id="mWin">
+    <div class="wt">Você zerou!</div>
+    <div class="ws" id="mWinTxt"></div>
+  </div>
+</div>
+</div>
+
+<!-- ========== CAÇA-PALAVRAS ========== -->
+<div class="tab-panel" id="panel-caca">
+<div class="game-wrap">
+  <div class="game-title">Caça-palavras</div>
+  <div class="game-desc">Clique na primeira letra e depois na última de cada palavra para marcá-la. Qualquer direção.</div>
+  <div class="game-status">
+    <span>Encontradas: <b id="wsN">0 / 7</b></span>
+    <button class="game-btn ghost" onclick="wsInit()">↺ Reiniciar</button>
+  </div>
+  <div class="ws-words" id="wsWords"></div>
+  <div class="ws-outer"><div class="ws-grid" id="wsGrid"></div></div>
+  <div class="win-banner" id="wsWin">
+    <div class="wt">Todas as palavras encontradas!</div>
+    <div class="ws">Excelente! Você domina o vocabulário dos sistemas de numeração.</div>
+  </div>
+</div>
+</div>
+
+<!-- ========== CRUZADINHA ========== -->
+<div class="tab-panel" id="panel-cruz">
+<div class="game-wrap">
+  <div class="game-title">Cruzadinha</div>
+  <div class="game-desc">Complete as palavras cruzadas — uma letra por célula. Clique em <strong>Conferir</strong> para ver o resultado.</div>
+  <div class="game-status">
+    <span>Palavras completas: <b id="cwN">0 / 6</b></span>
+    <div class="cw-actions">
+      <button class="game-btn" onclick="cwCheck()">Conferir</button>
+      <button class="game-btn ghost" onclick="cwClear()">↺ Limpar</button>
+    </div>
+  </div>
+  <div class="cw-outer"><div class="cw-grid" id="cwGrid"></div></div>
+  <div class="cw-clues">
+    <div>
+      <h4>Horizontal →</h4>
+      <div class="cw-clue"><b>1A</b> Menor unidade de informação (0 ou 1)</div>
+      <div class="cw-clue"><b>4A</b> Sistema de base 10, do dia a dia</div>
+      <div class="cw-clue"><b>5A</b> Sistema de base 8</div>
+    </div>
+    <div>
+      <h4>Vertical ↓</h4>
+      <div class="cw-clue"><b>1D</b> Sistema que usa apenas 0 e 1</div>
+      <div class="cw-clue"><b>2D</b> Conjunto de 8 bits</div>
+      <div class="cw-clue"><b>3D</b> Abreviação do sistema de base 16</div>
+    </div>
+  </div>
+  <div class="win-banner" id="cwWin">
+    <div class="wt">Cruzadinha completa!</div>
+    <div class="ws">Muito bem! Você conhece todos os termos dos sistemas de numeração.</div>
+  </div>
+</div>
+</div>
+
+<!-- ========== RELACIONAR ========== -->
+<div class="tab-panel" id="panel-rel">
+<div class="game-wrap">
+  <div class="game-title">Relacionar</div>
+  <div class="game-desc">Clique num valor da coluna esquerda, depois no equivalente da direita. Contra o tempo!</div>
+  <div class="game-status">
+    <span>Pares: <b id="relN">0 / 6</b></span>
+    <span>Tempo: <b class="match-timer" id="relT">0s</b></span>
+    <span>Erros: <b id="relE">0</b></span>
+    <button class="game-btn ghost" onclick="relInit()">↺ Reiniciar</button>
+  </div>
+  <div class="match-cols">
+    <div class="match-col">
+      <div class="col-lbl">Base A</div>
+      <div class="match-items" id="relLeft"></div>
+    </div>
+    <div class="match-col">
+      <div class="col-lbl">Base B</div>
+      <div class="match-items" id="relRight"></div>
+    </div>
+  </div>
+  <div class="win-banner" id="relWin">
+    <div class="wt">Todos os pares encontrados!</div>
+    <div class="ws" id="relWinTxt"></div>
+  </div>
+</div>
+</div>
+
+<div id="site-footer"></div>
+<script src="../assets/disciplinas.js"></script>
+<script src="../assets/shell.js" data-base="../"></script>
+<script>
+/* ---- UTIL ---- */
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+
+/* ---- TABS ---- */
+function tab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+  history.replaceState(null,'','#'+id);
+}
+(function(){
+  var h=(location.hash||'').replace('#','');
+  var map={'memoria':'memoria','cacapalavras':'caca','cruzadinha':'cruz','relacionar':'rel'};
+  if(map[h]){var b=document.querySelector('[onclick*="\''+map[h]+'\'"]');if(b) tab(map[h],b);}
+})();
+
+/* =================================================================
+   MEMÓRIA
+   ================================================================= */
+var MP=[
+  {a:'5₁₀',   b:'101₂'},  {a:'10₁₀',  b:'A₁₆'},
+  {a:'12₁₀',  b:'C₁₆'},   {a:'15₁₀',  b:'1111₂'},
+  {a:'8₁₀',   b:'1000₂'}, {a:'16₁₀',  b:'10₁₆'},
+  {a:'255₁₀', b:'FF₁₆'},  {a:'7₁₀',   b:'111₂'}
+];
+var mCards=[],mFlip=[],mOk=0,mMov=0,mLock=false;
+function mInit(){
+  mCards=[];mFlip=[];mOk=0;mMov=0;mLock=false;
+  document.getElementById('mPar').textContent='0 / 8';
+  document.getElementById('mJog').textContent='0';
+  document.getElementById('mWin').classList.remove('show');
+  var deck=[];
+  MP.forEach(function(p,i){deck.push({id:i,txt:p.a});deck.push({id:i,txt:p.b});});
+  deck=shuffle(deck);
+  var g=document.getElementById('mGrid'); g.innerHTML='';
+  deck.forEach(function(d,i){
+    var c=document.createElement('div'); c.className='memo-card';
+    c.innerHTML='<div class="memo-inner"><div class="memo-face memo-front"><span class="qmark">?</span></div><div class="memo-face memo-back">'+d.txt+'</div></div>';
+    c.dataset.id=d.id;
+    c.addEventListener('click',function(){mFlipCard(i);});
+    g.appendChild(c); mCards.push(c);
+  });
+}
+function mFlipCard(i){
+  if(mLock) return;
+  var c=mCards[i];
+  if(c.classList.contains('flipped')||c.classList.contains('matched')) return;
+  c.classList.add('flipped'); mFlip.push(i);
+  if(mFlip.length===2){
+    mMov++; document.getElementById('mJog').textContent=mMov; mLock=true;
+    var a=mCards[mFlip[0]],b=mCards[mFlip[1]];
+    if(a.dataset.id===b.dataset.id){
+      setTimeout(function(){
+        a.classList.add('matched'); b.classList.add('matched');
+        mOk++; document.getElementById('mPar').textContent=mOk+' / 8';
+        mFlip=[]; mLock=false;
+        if(mOk===8){
+          var msg='Zerado em '+mMov+' jogada'+(mMov===1?'':'s')+'!';
+          if(mMov<=12) msg+=' Memória incrível!';
+          else if(mMov<=16) msg+=' Ótimo resultado!';
+          document.getElementById('mWinTxt').textContent=msg;
+          document.getElementById('mWin').classList.add('show');
+        }
+      },400);
+    } else {
+      setTimeout(function(){a.classList.remove('flipped');b.classList.remove('flipped');mFlip=[];mLock=false;},900);
+    }
+  }
+}
+mInit();
+
+/* =================================================================
+   CAÇA-PALAVRAS
+   Grade 10×10 pré-definida
+   ================================================================= */
+var WS=[
+  {w:'BINARIO',cls:'f1',cells:[[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6]]},
+  {w:'BYTE',   cls:'f2',cells:[[0,8],[1,8],[2,8],[3,8]]},
+  {w:'DECIMAL',cls:'f3',cells:[[2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6]]},
+  {w:'OCTAL',  cls:'f4',cells:[[4,0],[4,1],[4,2],[4,3],[4,4]]},
+  {w:'HEX',    cls:'f5',cells:[[6,2],[6,3],[6,4]]},
+  {w:'BASE',   cls:'f6',cells:[[8,2],[8,3],[8,4],[8,5]]},
+  {w:'BIT',    cls:'f7',cells:[[7,9],[8,9],[9,9]]}
+];
+var FILL='QWRTZUPLKJGFDSAMNVCX';
+var wsFirst=null,wsFound=0;
+function wsInit(){
+  wsFirst=null; wsFound=0;
+  document.getElementById('wsN').textContent='0 / 7';
+  document.getElementById('wsWin').classList.remove('show');
+  /* monta grade */
+  var g=[];
+  for(var r=0;r<10;r++){g.push([]);for(var c=0;c<10;c++) g[r].push('');}
+  WS.forEach(function(w){w.cells.forEach(function(rc,i){g[rc[0]][rc[1]]=w.w[i];});});
+  for(var r=0;r<10;r++) for(var c=0;c<10;c++) if(!g[r][c]) g[r][c]=FILL[Math.floor(Math.random()*FILL.length)];
+  /* renderiza */
+  var dg=document.getElementById('wsGrid');
+  dg.style.gridTemplateColumns='repeat(10,1fr)'; dg.innerHTML='';
+  for(var r=0;r<10;r++) for(var c=0;c<10;c++){
+    (function(row,col){
+      var el=document.createElement('div'); el.className='ws-cell';
+      el.textContent=g[row][col]; el.dataset.r=row; el.dataset.c=col;
+      el.addEventListener('click',function(){wsClick(row,col,el);});
+      dg.appendChild(el);
+    })(r,c);
+  }
+  /* lista */
+  var wl=document.getElementById('wsWords'); wl.innerHTML='';
+  WS.forEach(function(w){
+    var s=document.createElement('span'); s.className='ws-word'; s.id='ww-'+w.w; s.textContent=w.w;
+    wl.appendChild(s);
+  });
+}
+function wsQ(r,c){return document.querySelector('#wsGrid [data-r="'+r+'"][data-c="'+c+'"]');}
+function wsClick(r,c,el){
+  /* já marcada como encontrada? ignora */
+  for(var k=1;k<=7;k++) if(el.classList.contains('f'+k)) return;
+  if(!wsFirst){
+    el.classList.add('sel'); wsFirst={r:r,c:c,el:el};
+  } else {
+    if(wsFirst.r===r&&wsFirst.c===c){el.classList.remove('sel');wsFirst=null;return;}
+    /* verifica se é começo+fim de alguma palavra */
+    var matched=null;
+    WS.forEach(function(w){
+      if(matched) return;
+      var fc=w.cells[0],lc=w.cells[w.cells.length-1];
+      if((wsFirst.r===fc[0]&&wsFirst.c===fc[1]&&r===lc[0]&&c===lc[1])||
+         (wsFirst.r===lc[0]&&wsFirst.c===lc[1]&&r===fc[0]&&c===fc[1])) matched=w;
+    });
+    wsFirst.el.classList.remove('sel');
+    if(matched){
+      matched.cells.forEach(function(rc){
+        var cel=wsQ(rc[0],rc[1]);
+        if(cel){for(var k=1;k<=7;k++) cel.classList.remove('f'+k,'sel'); cel.classList.add(matched.cls);}
+      });
+      document.getElementById('ww-'+matched.w).classList.add('found');
+      wsFound++; document.getElementById('wsN').textContent=wsFound+' / 7';
+      if(wsFound===7) document.getElementById('wsWin').classList.add('show');
+    }
+    wsFirst=null;
+  }
+}
+wsInit();
+
+/* =================================================================
+   CRUZADINHA
+   Layout (7 linhas × 10 colunas):
+     BIT     horiz  lin 0 col 5-7   → 1A
+     BINARIO vert   col 5 lin 0-6   → 1D
+     BYTE    vert   col 9 lin 0-3   → 2D
+     HEX     vert   col 1 lin 2-4   → 3D
+     DECIMAL horiz  lin 3 col 0-6   → 4A
+     OCTAL   horiz  lin 6 col 5-9   → 5A
+   ================================================================= */
+var CWW=[
+  {id:'1A',w:'BIT',    dir:'h',r:0,c:5},
+  {id:'1D',w:'BINARIO',dir:'v',r:0,c:5},
+  {id:'2D',w:'BYTE',   dir:'v',r:0,c:9},
+  {id:'3D',w:'HEX',    dir:'v',r:2,c:1},
+  {id:'4A',w:'DECIMAL',dir:'h',r:3,c:0},
+  {id:'5A',w:'OCTAL',  dir:'h',r:6,c:5}
+];
+var CWR=7,CWC=10;
+function cwPos(w,i){return w.dir==='h'?{r:w.r,c:w.c+i}:{r:w.r+i,c:w.c};}
+function cwInp(r,c){return document.querySelector('#cwGrid input[data-r="'+r+'"][data-c="'+c+'"]');}
+
+function cwBuild(){
+  /* mapa: quais células são ativas e qual número iniciam */
+  var active={}, nums={};
+  CWW.forEach(function(w){
+    for(var i=0;i<w.w.length;i++){
+      var p=cwPos(w,i); active[p.r+','+p.c]=w.w[i];
+    }
+    /* número no início de cada palavra */
+    var n=w.id.match(/\d+/)[0];
+    var key=w.r+','+w.c;
+    if(!nums[key]) nums[key]=n;
+  });
+  return {active:active,nums:nums};
+}
+
+function cwInit(){
+  document.getElementById('cwWin').classList.remove('show');
+  document.getElementById('cwN').textContent='0 / 6';
+  var info=cwBuild();
+  var g=document.getElementById('cwGrid');
+  g.style.gridTemplateColumns='repeat('+CWC+',1fr)'; g.innerHTML='';
+  for(var r=0;r<CWR;r++){
+    for(var c=0;c<CWC;c++){
+      var key=r+','+c;
+      if(info.active[key]){
+        var cell=document.createElement('div'); cell.className='cw-cell';
+        if(info.nums[key]){var s=document.createElement('span');s.className='cn';s.textContent=info.nums[key];cell.appendChild(s);}
+        var inp=document.createElement('input'); inp.type='text'; inp.maxLength=1;
+        inp.dataset.r=r; inp.dataset.c=c; inp.dataset.ans=info.active[key];
+        inp.addEventListener('input',function(e){
+          e.target.value=e.target.value.slice(-1).toUpperCase();
+          e.target.classList.remove('ok','err');
+          cwScore();
+        });
+        cell.appendChild(inp); g.appendChild(cell);
+      } else {
+        var blk=document.createElement('div'); blk.className='cw-black'; g.appendChild(blk);
+      }
+    }
+  }
+}
+function cwCheck(){
+  var ok=0;
+  CWW.forEach(function(w){
+    var wOk=true;
+    for(var i=0;i<w.w.length;i++){
+      var p=cwPos(w,i), inp=cwInp(p.r,p.c);
+      if(inp){
+        inp.classList.remove('ok','err');
+        if(inp.value===w.w[i]){inp.classList.add('ok');}
+        else{inp.classList.add('err');wOk=false;}
+      } else {wOk=false;}
+    }
+    if(wOk) ok++;
+  });
+  document.getElementById('cwN').textContent=ok+' / 6';
+  if(ok===6) document.getElementById('cwWin').classList.add('show');
+}
+function cwScore(){
+  var ok=0;
+  CWW.forEach(function(w){
+    var wOk=true;
+    for(var i=0;i<w.w.length;i++){
+      var p=cwPos(w,i), inp=cwInp(p.r,p.c);
+      if(!inp||inp.value!==w.w[i]) wOk=false;
+    }
+    if(wOk) ok++;
+  });
+  document.getElementById('cwN').textContent=ok+' / 6';
+  if(ok===6){document.querySelectorAll('#cwGrid input').forEach(function(inp){inp.classList.add('ok');});document.getElementById('cwWin').classList.add('show');}
+}
+function cwClear(){
+  document.querySelectorAll('#cwGrid input').forEach(function(inp){inp.value='';inp.classList.remove('ok','err');});
+  document.getElementById('cwN').textContent='0 / 6';
+  document.getElementById('cwWin').classList.remove('show');
+}
+cwInit();
+
+/* =================================================================
+   RELACIONAR
+   ================================================================= */
+var REL=[
+  {l:'1010₂', r:'10₁₀'},  {l:'FF₁₆',  r:'255₁₀'},
+  {l:'10₈',   r:'8₁₀'},   {l:'1111₂', r:'F₁₆'},
+  {l:'1A₁₆',  r:'26₁₀'},  {l:'100₂',  r:'4₁₀'}
+];
+var relSel=null,relOk=0,relErr=0,relSec=0,relTimer=null,relStarted=false;
+function relInit(){
+  clearInterval(relTimer); relSel=null;relOk=0;relErr=0;relSec=0;relStarted=false;
+  document.getElementById('relN').textContent='0 / 6';
+  document.getElementById('relE').textContent='0';
+  document.getElementById('relT').textContent='0s';
+  document.getElementById('relWin').classList.remove('show');
+  var lp=shuffle(REL), rp=shuffle(REL);
+  function mkItem(txt,side,idx,cont){
+    var el=document.createElement('div'); el.className='match-item';
+    el.textContent=txt; el.dataset.idx=idx; el.dataset.side=side;
+    el.addEventListener('click',function(){relClick(el,side,idx);});
+    cont.appendChild(el);
+  }
+  var lc=document.getElementById('relLeft'), rc=document.getElementById('relRight');
+  lc.innerHTML=''; rc.innerHTML='';
+  lp.forEach(function(p){mkItem(p.l,'l',REL.indexOf(p),lc);});
+  rp.forEach(function(p){mkItem(p.r,'r',REL.indexOf(p),rc);});
+}
+function relClick(el,side,idx){
+  if(el.classList.contains('ok')) return;
+  if(!relStarted){
+    relStarted=true;
+    relTimer=setInterval(function(){relSec++;document.getElementById('relT').textContent=relSec+'s';},1000);
+  }
+  if(!relSel){
+    if(side!=='l') return;
+    if(el.classList.contains('sel')){el.classList.remove('sel');return;}
+    el.classList.add('sel'); relSel={el:el,idx:idx};
+  } else {
+    if(side==='l'){relSel.el.classList.remove('sel');el.classList.add('sel');relSel={el:el,idx:idx};return;}
+    var ok=(relSel.idx===parseInt(el.dataset.idx));
+    if(ok){
+      relSel.el.classList.remove('sel'); relSel.el.classList.add('ok'); el.classList.add('ok');
+      relOk++; document.getElementById('relN').textContent=relOk+' / 6';
+      if(relOk===6){
+        clearInterval(relTimer);
+        document.getElementById('relWinTxt').textContent='Concluído em '+relSec+'s com '+relErr+' erro'+(relErr===1?'':'s')+'.';
+        document.getElementById('relWin').classList.add('show');
+      }
+    } else {
+      relErr++; document.getElementById('relE').textContent=relErr;
+      var e1=relSel.el, e2=el;
+      e1.classList.add('err'); e2.classList.add('err'); e1.classList.remove('sel');
+      setTimeout(function(){e1.classList.remove('err');e2.classList.remove('err');},700);
+    }
+    relSel=null;
+  }
+}
+relInit();
+</script>
+</body>
+</html>

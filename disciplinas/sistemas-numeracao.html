@@ -256,6 +256,33 @@
   .score-pct{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;margin-left:auto;}
   .score-msg{font-size:14px;opacity:.7;width:100%;margin-top:-4px;}
 
+  /* ---------- PREVIEW DOS JOGOS ---------- */
+  .jogos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:4px;}
+  .jogo-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px 18px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:10px;
+    transition:transform .18s,box-shadow .18s,border-color .18s;
+    text-decoration:none;color:inherit;
+  }
+  .jogo-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+  .jogo-icon{font-size:28px;line-height:1;}
+  .jogo-card h4{font-family:'Fraunces',serif;font-size:19px;font-weight:600;margin:0;}
+  .jogo-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.5;flex:1;margin:0;}
+  .jogo-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13px;font-weight:600;padding:7px 14px;
+    border-radius:8px;border:1px solid var(--line);background:var(--paper-2);
+    color:var(--ink-soft);width:fit-content;margin-top:4px;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .jogo-card:hover .jogo-link{background:var(--bin-bg);color:var(--bin);border-color:var(--bin);}
+  .jogo-card.jc-mem{border-top:3px solid var(--bin);}
+  .jogo-card.jc-ws {border-top:3px solid var(--oct);}
+  .jogo-card.jc-cw {border-top:3px solid var(--dec);}
+  .jogo-card.jc-mt {border-top:3px solid var(--hex);}
+  @media(max-width:600px){.jogos-grid{grid-template-columns:1fr;}}
+
   /* ---------- REFERÊNCIAS ---------- */
   .ref-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:14px;margin-top:24px;}
   .ref-item{
@@ -322,7 +349,8 @@
         <a href="#conversor"  class="nav-link"><span class="num">03</span><span>Conversor universal</span></a>
         <a href="#metodos"    class="nav-link"><span class="num">04</span><span>Como converter à mão</span></a>
         <a href="#exercicios" class="nav-link"><span class="num">05</span><span>Exercícios</span></a>
-        <a href="#referencias"class="nav-link"><span class="num">06</span><span>Referências</span></a>
+        <a href="#jogos"      class="nav-link"><span class="num">06</span><span>Jogos</span></a>
+        <a href="#referencias"class="nav-link"><span class="num">07</span><span>Referências</span></a>
       </div>
     </nav>
   </aside>
@@ -683,9 +711,41 @@
         </a>
       </div>
 
+      <!-- JOGOS -->
+      <section id="jogos">
+        <div class="sec-head"><span class="sec-num">06</span><h3>Jogos</h3></div>
+        <p class="sec-lede">Pratique os sistemas de numeração de forma lúdica. Quatro jogos interativos — todos baseados no conteúdo desta aula.</p>
+        <div class="jogos-grid">
+          <a href="jogos-numeracao.html#memoria" class="jogo-card jc-mem">
+            <span class="jogo-icon">🃏</span>
+            <h4>Jogo da Memória</h4>
+            <p>Encontre os pares: cada número decimal tem seu equivalente em binário, hex ou octal esperando por você.</p>
+            <span class="jogo-link">Jogar →</span>
+          </a>
+          <a href="jogos-numeracao.html#cacapalavras" class="jogo-card jc-ws">
+            <span class="jogo-icon">🔍</span>
+            <h4>Caça-palavras</h4>
+            <p>Encontre os termos de sistemas de numeração escondidos na grade de letras — horizontal, vertical e diagonal.</p>
+            <span class="jogo-link">Jogar →</span>
+          </a>
+          <a href="jogos-numeracao.html#cruzadinha" class="jogo-card jc-cw">
+            <span class="jogo-icon">📐</span>
+            <h4>Cruzadinha</h4>
+            <p>Preencha as palavras cruzadas com os termos e conversões estudados. Dicas horizontais e verticais.</p>
+            <span class="jogo-link">Jogar →</span>
+          </a>
+          <a href="jogos-numeracao.html#relacionar" class="jogo-card jc-mt">
+            <span class="jogo-icon">🔗</span>
+            <h4>Relacionar</h4>
+            <p>Conecte cada número na base da esquerda com seu equivalente na base da direita. Contra o tempo!</p>
+            <span class="jogo-link">Jogar →</span>
+          </a>
+        </div>
+      </section>
+
       <!-- REFERÊNCIAS -->
       <section id="referencias">
-        <div class="sec-head"><span class="sec-num">06</span><h3>Referências</h3></div>
+        <div class="sec-head"><span class="sec-num">07</span><h3>Referências</h3></div>
         <p class="sec-lede">Obras publicadas no Brasil para aprofundar o estudo de sistemas de numeração, eletrônica digital e organização de computadores.</p>
 
         <ul class="ref-list">
