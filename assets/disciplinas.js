@@ -37,6 +37,13 @@ window.PORTAL_DISCIPLINAS = [
         cor: "bin",
         pagina: "disciplinas/sistemas-numeracao.html",
         status: "live"
+      },
+      {
+        nome: "Exercícios para Entrega",
+        descricao: "Resolva as questões de sistemas de numeração e envie os resultados diretamente ao professor.",
+        cor: "dec",
+        pagina: "disciplinas/exercicios-numeracao.html",
+        status: "live"
       }
       // Próximos assuntos desta disciplina entram aqui. Exemplo:
       // { nome:"Gerência de Memória", descricao:"...", cor:"oct", status:"soon" }

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercícios para Entrega — Sistemas de Numeração</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ---- identidade da página ---- */
+  :root{ --info:#2563eb; }
+
+  /* ---- hero ---- */
+  .ex-hero{
+    padding:52px 0 40px;border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(ellipse 60% 50% at 10% 30%,rgba(37,99,235,.06),transparent),
+      radial-gradient(ellipse 50% 50% at 90% 70%,rgba(47,111,106,.05),transparent);
+  }
+  .ex-hero .eyebrow{margin-bottom:12px;display:block;}
+  .ex-hero h1{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(28px,4.5vw,40px);letter-spacing:-.02em;line-height:1.08;
+    margin-bottom:14px;
+  }
+  .ex-hero p{font-size:16px;color:var(--ink-soft);max-width:560px;}
+
+  /* ---- aviso/instrução ---- */
+  .notice{
+    background:var(--dev-bg);border:1px solid var(--dev);border-radius:var(--radius);
+    padding:16px 20px;margin-bottom:32px;
+    display:flex;gap:14px;align-items:flex-start;
+  }
+  .notice-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+  .notice p{margin:0;font-size:15px;color:var(--ink);}
+  .notice p strong{color:var(--dev);}
+
+  /* ---- identificação do aluno ---- */
+  .student-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px 26px;margin-bottom:32px;box-shadow:var(--shadow);
+  }
+  .student-card h3{
+    font-family:'Fraunces',serif;font-size:17px;font-weight:600;
+    margin-bottom:16px;color:var(--ink);
+  }
+  .field-row{display:grid;grid-template-columns:2fr 1fr;gap:14px;}
+  .field-group{display:flex;flex-direction:column;gap:6px;}
+  .field-group label{font-size:13px;font-weight:600;color:var(--ink-soft);}
+  .field-group input{
+    font-family:'Inter',sans-serif;font-size:15px;font-weight:500;
+    padding:10px 14px;border:1px solid var(--line);border-radius:9px;
+    background:var(--paper);color:var(--ink);transition:border-color .15s;
+  }
+  .field-group input:focus{outline:none;border-color:var(--info);}
+  .field-error{border-color:var(--hex)!important;background:var(--hex-bg)!important;}
+
+  /* ---- questões ---- */
+  .questions-list{display:flex;flex-direction:column;gap:16px;margin-bottom:28px;}
+  .q-card{
+    background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;box-shadow:var(--shadow);
+    transition:border-color .2s;
+  }
+  .q-card.answered-ok {border-color:var(--bin);}
+  .q-card.answered-no {border-color:var(--hex);}
+  .q-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;}
+  .q-num{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    color:var(--paper);background:var(--ink);border-radius:6px;
+    padding:3px 9px;flex-shrink:0;margin-top:2px;
+    transition:background .2s;
+  }
+  .q-card.answered-ok .q-num{background:var(--bin);}
+  .q-card.answered-no .q-num{background:var(--hex);}
+  .q-text{font-size:16px;color:var(--ink);font-weight:500;line-height:1.5;}
+  .q-text code{
+    font-family:'JetBrains Mono',monospace;font-size:.92em;font-weight:700;
+    background:var(--paper-2);padding:2px 7px;border-radius:5px;
+  }
+
+  .q-answer{display:flex;align-items:center;gap:10px;margin-top:4px;}
+  .q-answer input{
+    font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;
+    width:160px;padding:9px 13px;border:1.5px solid var(--line);border-radius:9px;
+    background:var(--paper);color:var(--ink);transition:border-color .15s;
+  }
+  .q-answer input:focus{outline:none;border-color:var(--info);}
+  .q-answer input:disabled{
+    background:var(--paper-2);color:var(--ink-soft);cursor:default;
+  }
+
+  .q-feedback{
+    margin-top:12px;padding:11px 15px;border-radius:9px;
+    font-size:14.5px;font-weight:500;display:none;
+  }
+  .q-feedback.ok{display:flex;align-items:flex-start;gap:10px;background:var(--bin-bg);color:var(--bin);border:1px solid var(--bin);}
+  .q-feedback.no{display:flex;align-items:flex-start;gap:10px;background:var(--hex-bg);color:var(--hex);border:1px solid var(--hex);}
+  .q-feedback .fb-icon{font-size:16px;flex-shrink:0;}
+  .q-feedback .fb-body .sol{display:block;margin-top:4px;font-size:13px;color:var(--ink-soft);font-weight:400;}
+  .q-feedback .fb-body code{background:rgba(255,255,255,.5);}
+
+  /* ---- ações ---- */
+  .actions-bar{
+    display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+    margin-bottom:32px;
+  }
+  .btn-primary{
+    font-family:'Inter',sans-serif;font-size:15px;font-weight:600;
+    padding:12px 24px;border-radius:10px;border:none;cursor:pointer;
+    background:var(--info);color:#fff;
+    transition:opacity .15s,transform .12s;box-shadow:0 2px 8px rgba(37,99,235,.22);
+  }
+  .btn-primary:hover{opacity:.9;}
+  .btn-primary:active{transform:scale(.97);}
+  .btn-primary:disabled{opacity:.4;cursor:default;transform:none;}
+  .btn-ghost{
+    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+    padding:11px 20px;border-radius:10px;cursor:pointer;
+    background:var(--paper-2);color:var(--ink);border:1px solid var(--line);
+    transition:background .15s;
+  }
+  .btn-ghost:hover{background:var(--card);}
+
+  /* ---- resultado ---- */
+  .result-section{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;box-shadow:var(--shadow);margin-bottom:28px;display:none;
+  }
+  .result-section.show{display:block;}
+  .result-score{
+    display:flex;align-items:center;gap:20px;
+    background:var(--ink);color:var(--paper);border-radius:12px;
+    padding:20px 24px;margin-bottom:24px;flex-wrap:wrap;
+  }
+  .score-num{
+    font-family:'Fraunces',serif;font-size:42px;font-weight:700;line-height:1;
+    color:var(--paper);
+  }
+  .score-label{font-size:14px;color:rgba(246,244,238,.6);}
+  .score-pct{
+    margin-left:auto;font-family:'JetBrains Mono',monospace;
+    font-size:22px;font-weight:700;
+  }
+
+  .result-table{width:100%;border-collapse:collapse;margin-bottom:8px;}
+  .result-table th{
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    font-weight:700;color:var(--ink-faint);padding:8px 12px;
+    background:var(--paper-2);text-align:left;
+  }
+  .result-table td{
+    padding:10px 12px;font-size:14px;color:var(--ink-soft);
+    border-top:1px solid var(--line-soft);
+  }
+  .result-table td.q-label{font-weight:600;color:var(--ink);white-space:nowrap;}
+  .result-table td.a-student{font-family:'JetBrains Mono',monospace;font-weight:700;}
+  .result-table td.a-correct{font-family:'JetBrains Mono',monospace;color:var(--ink-faint);}
+  .result-table td.status-ok{color:var(--bin);font-weight:700;}
+  .result-table td.status-no{color:var(--hex);font-weight:700;}
+  .result-table tr:first-child td{border-top:none;}
+
+  /* ---- formulário de envio ---- */
+  .send-section{
+    background:var(--dev-bg);border:1.5px solid var(--dev);
+    border-radius:var(--radius);padding:28px;
+    display:none;
+  }
+  .send-section.show{display:block;}
+  .send-section h3{
+    font-family:'Fraunces',serif;font-size:20px;font-weight:600;
+    color:var(--ink);margin-bottom:6px;
+  }
+  .send-section > p{font-size:14px;color:var(--ink-soft);margin-bottom:20px;}
+
+  .send-info-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+    background:rgba(255,255,255,.5);border-radius:10px;padding:14px;
+    margin-bottom:20px;font-size:14px;
+  }
+  .send-info-grid span{color:var(--ink-soft);}
+  .send-info-grid strong{color:var(--ink);}
+
+  .send-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .btn-send{
+    font-family:'Inter',sans-serif;font-size:15px;font-weight:600;
+    padding:13px 28px;border-radius:10px;border:none;cursor:pointer;
+    background:var(--dev);color:#fff;
+    transition:opacity .15s,transform .12s;
+    box-shadow:0 3px 10px rgba(37,99,235,.28);
+    display:flex;align-items:center;gap:10px;
+  }
+  .btn-send:hover{opacity:.9;}
+  .btn-send:active{transform:scale(.97);}
+  .btn-send:disabled{opacity:.4;cursor:default;}
+  .send-note{font-size:13px;color:var(--ink-faint);}
+
+  /* ---- sucesso ---- */
+  .success-banner{
+    background:var(--bin-bg);border:1.5px solid var(--bin);border-radius:var(--radius);
+    padding:28px;text-align:center;display:none;
+  }
+  .success-banner.show{display:block;}
+  .success-banner h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--bin);margin-bottom:8px;}
+  .success-banner p{font-size:15px;color:var(--ink-soft);}
+
+  /* mobile */
+  @media(max-width:600px){
+    .field-row{grid-template-columns:1fr;}
+    .send-info-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<nav class="crumbs">
+  <a href="../index.html">Início</a><span>›</span>
+  <a href="sistemas-operacionais.html">Sistemas Operacionais</a><span>›</span>
+  Exercícios para Entrega
+</nav>
+
+<main>
+  <section class="ex-hero">
+    <div class="container">
+      <span class="eyebrow">Sistemas de Numeração · Avaliação</span>
+      <h1>Exercícios para Entrega</h1>
+      <p>Responda todas as questões, confira seus resultados e envie ao professor. Após o envio, a pontuação e as respostas são registradas automaticamente.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="narrow">
+
+      <!-- Instrução -->
+      <div class="notice">
+        <div class="notice-icon">ℹ</div>
+        <p>Preencha seu <strong>nome e turma</strong> antes de começar. Responda as questões, clique em <strong>Conferir tudo</strong> para ver os resultados e depois <strong>Enviar ao professor</strong>.</p>
+      </div>
+
+      <!-- Identificação -->
+      <div class="student-card">
+        <h3>Identificação</h3>
+        <div class="field-row">
+          <div class="field-group">
+            <label for="studentName">Nome completo</label>
+            <input type="text" id="studentName" placeholder="Ex: João da Silva" autocomplete="name">
+          </div>
+          <div class="field-group">
+            <label for="studentTurma">Turma</label>
+            <input type="text" id="studentTurma" placeholder="Ex: 1º A" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <!-- Questões -->
+      <div class="questions-list" id="questionsList"></div>
+
+      <!-- Ações -->
+      <div class="actions-bar">
+        <button class="btn-primary" id="btnCheck" onclick="checkAll()">Conferir tudo</button>
+        <button class="btn-ghost" onclick="resetAll()">Recomeçar</button>
+      </div>
+
+      <!-- Resultado -->
+      <div class="result-section" id="resultSection">
+        <div class="result-score">
+          <div>
+            <div class="score-num" id="scoreNum">—</div>
+            <div class="score-label">questões certas</div>
+          </div>
+          <div style="color:rgba(246,244,238,.4);font-size:28px;font-weight:300;">de 8</div>
+          <div class="score-pct" id="scorePct"></div>
+        </div>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th>Questão</th>
+              <th>Sua resposta</th>
+              <th>Resposta correta</th>
+              <th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody id="resultTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Envio -->
+      <div class="send-section" id="sendSection">
+        <h3>Enviar ao professor</h3>
+        <p>Confira seus dados abaixo e clique em enviar. O professor receberá suas respostas por e-mail.</p>
+        <div class="send-info-grid" id="sendInfoGrid"></div>
+        <div class="send-actions">
+          <button class="btn-send" id="btnSend" onclick="submitResults()">
+            <span>Enviar ao professor</span>
+            <span>→</span>
+          </button>
+          <span class="send-note" id="sendNote"></span>
+        </div>
+        <!-- Formulário oculto — Formspree -->
+        <form id="hiddenForm"
+              action="https://formspree.io/f/mjgdnklv"
+              method="POST"
+              style="display:none;">
+          <input type="hidden" name="_subject"  id="fSubject">
+          <input type="hidden" name="aluno"     id="fAluno">
+          <input type="hidden" name="turma"     id="fTurma">
+          <input type="hidden" name="pontuacao" id="fPontuacao">
+          <input type="hidden" name="data"      id="fData">
+          <input type="hidden" name="resultados" id="fResultados">
+          <!-- redireciona de volta para esta página após envio bem-sucedido -->
+          <input type="hidden" name="_next"     value="?enviado=1">
+        </form>
+      </div>
+
+      <!-- Sucesso (mostrado via ?enviado=1 na URL) -->
+      <div class="success-banner" id="successBanner">
+        <h3>Exercícios enviados!</h3>
+        <p>O professor receberá suas respostas por e-mail em instantes.<br>Pode fechar esta página.</p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="../assets/disciplinas.js"></script>
+<script src="../assets/shell.js" data-base="../"></script>
+<script>
+var QUESTIONS = [
+  { t:'Converta o binário <code>101</code> para decimal.',                     a:'5',    sol:'2² + 2⁰ = 4 + 0 + 1 = 5' },
+  { t:'Converta o decimal <code>10</code> para binário.',                      a:'1010', sol:'10 = 8 + 2 → 1010' },
+  { t:'Qual o valor decimal do dígito hexadecimal <code>C</code>?',            a:'12',   sol:'A=10, B=11, C=12' },
+  { t:'Converta o binário <code>1111</code> para decimal.',                    a:'15',   sol:'8 + 4 + 2 + 1 = 15' },
+  { t:'Converta o decimal <code>8</code> para octal.',                         a:'10',   sol:'O octal vira a casa no 8: 8₁₀ = 10₈' },
+  { t:'Em RGB, qual o valor decimal do par hexadecimal <code>FF</code>?',      a:'255',  sol:'F=15: 15×16 + 15 = 255' },
+  { t:'Converta o decimal <code>13</code> para binário.',                      a:'1101', sol:'13÷2: restos 1,0,1,1 → lidos de baixo: 1101' },
+  { t:'Converta o decimal <code>26</code> para hexadecimal.',                  a:'1A',   sol:'26 = 16 + 10 → 1 e A → 1A' }
+];
+
+var checked = false;
+
+function norm(s){ return (s||'').toString().trim().toUpperCase().replace(/^0X/,'').replace(/^#/,''); }
+
+/* ---- renderiza as questões ---- */
+function renderQuestions(){
+  var list = document.getElementById('questionsList');
+  list.innerHTML = '';
+  QUESTIONS.forEach(function(q, i){
+    var card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'qcard'+i;
+    card.innerHTML =
+      '<div class="q-header">'+
+        '<span class="q-num" id="qnum'+i+'">'+(i+1)+'</span>'+
+        '<span class="q-text">'+q.t+'</span>'+
+      '</div>'+
+      '<div class="q-answer">'+
+        '<input type="text" id="qi'+i+'" placeholder="sua resposta" autocomplete="off">'+
+      '</div>'+
+      '<div class="q-feedback" id="qf'+i+'"></div>';
+    list.appendChild(card);
+  });
+}
+
+/* ---- confere todas as questões ---- */
+function checkAll(){
+  var name  = document.getElementById('studentName').value.trim();
+  var turma = document.getElementById('studentTurma').value.trim();
+
+  /* valida identificação */
+  var nameInput  = document.getElementById('studentName');
+  var turmaInput = document.getElementById('studentTurma');
+  nameInput.classList.remove('field-error');
+  turmaInput.classList.remove('field-error');
+  if(!name)  { nameInput.classList.add('field-error');  nameInput.focus(); return; }
+  if(!turma) { turmaInput.classList.add('field-error'); turmaInput.focus(); return; }
+
+  checked = true;
+  var ok = 0;
+  var rows = '';
+  var detalhes = '';
+
+  detalhes += 'ALUNO: '+name+'\nTURMA: '+turma+'\nDATA: '+new Date().toLocaleString('pt-BR')+'\n\n';
+  detalhes += '=== QUESTÕES ===\n';
+
+  QUESTIONS.forEach(function(q, i){
+    var inp    = document.getElementById('qi'+i);
+    var given  = norm(inp.value);
+    var correct= norm(q.a);
+    var isOk   = given === correct;
+    if(isOk) ok++;
+
+    /* feedback visual no card */
+    var card = document.getElementById('qcard'+i);
+    card.classList.remove('answered-ok','answered-no');
+    card.classList.add(isOk ? 'answered-ok' : 'answered-no');
+    inp.disabled = true;
+
+    var fb = document.getElementById('qf'+i);
+    if(isOk){
+      fb.className = 'q-feedback ok';
+      fb.innerHTML = '<span class="fb-icon">✓</span><span class="fb-body">Correto! <span class="sol">'+q.sol+'</span></span>';
+    } else {
+      fb.className = 'q-feedback no';
+      fb.innerHTML = '<span class="fb-icon">✗</span><span class="fb-body">Resposta: <code>'+(inp.value||'—')+'</code> &nbsp;·&nbsp; Correta: <code>'+q.a+'</code><span class="sol">'+q.sol+'</span></span>';
+    }
+
+    /* linha da tabela de resultado */
+    var qLabel = 'Questão '+(i+1);
+    rows += '<tr>'+
+      '<td class="q-label">'+qLabel+'</td>'+
+      '<td class="a-student">'+(inp.value||'—')+'</td>'+
+      '<td class="a-correct">'+q.a+'</td>'+
+      '<td class="'+(isOk?'status-ok':'status-no')+'">'+(isOk?'✓ Certo':'✗ Errado')+'</td>'+
+    '</tr>';
+
+    /* texto para o e-mail */
+    detalhes += '\nQ'+(i+1)+': '+(isOk?'✓ CERTO':'✗ ERRADO')+
+      '\nPergunta: '+q.t.replace(/<[^>]+>/g,'')+
+      '\nResposta: '+(inp.value||'(sem resposta)')+
+      (isOk?'':'\nCorreta: '+q.a)+
+      '\n';
+  });
+
+  var pct = Math.round(ok/QUESTIONS.length*100);
+  detalhes += '\n=== PONTUAÇÃO: '+ok+' / '+QUESTIONS.length+' ('+pct+'%) ===';
+
+  /* preenche seção de resultado */
+  document.getElementById('scoreNum').textContent = ok;
+  document.getElementById('scorePct').textContent = pct+'%';
+  document.getElementById('resultTableBody').innerHTML = rows;
+  document.getElementById('resultSection').classList.add('show');
+
+  /* preenche seção de envio */
+  var dataStr = new Date().toLocaleString('pt-BR');
+  document.getElementById('sendInfoGrid').innerHTML =
+    '<span>Aluno:</span><strong>'+name+'</strong>'+
+    '<span>Turma:</span><strong>'+turma+'</strong>'+
+    '<span>Pontuação:</span><strong>'+ok+' / '+QUESTIONS.length+' ('+pct+'%)</strong>'+
+    '<span>Data/hora:</span><strong>'+dataStr+'</strong>';
+
+  /* preenche campos ocultos do formulário */
+  document.getElementById('fSubject').value   = 'Exercícios — '+name+' ('+turma+') · '+ok+'/'+QUESTIONS.length;
+  document.getElementById('fAluno').value     = name;
+  document.getElementById('fTurma').value     = turma;
+  document.getElementById('fPontuacao').value = ok+' / '+QUESTIONS.length+' ('+pct+'%)';
+  document.getElementById('fData').value      = dataStr;
+  document.getElementById('fResultados').value= detalhes;
+
+  document.getElementById('sendSection').classList.add('show');
+  document.getElementById('btnCheck').disabled = true;
+
+  /* scroll suave para o resultado */
+  document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ---- submete via formulário oculto ---- */
+function submitResults(){
+  var btn  = document.getElementById('btnSend');
+  var note = document.getElementById('sendNote');
+
+  /* verifica se o ID do Formspree foi configurado */
+  var form = document.getElementById('hiddenForm');
+  if(form.action.indexOf('SUBSTITUA_PELO_SEU_ID') !== -1){
+    note.textContent = '⚠ Configure o Formspree antes de ativar o envio (veja as instruções no código).';
+    note.style.color = 'var(--hex)';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Enviando…';
+  note.textContent = '';
+
+  var data = new FormData(form);
+  fetch(form.action, {
+    method:'POST',
+    body:data,
+    headers:{'Accept':'application/json'}
+  })
+  .then(function(r){
+    if(r.ok){
+      document.getElementById('sendSection').style.display = 'none';
+      document.getElementById('successBanner').classList.add('show');
+      document.getElementById('successBanner').scrollIntoView({behavior:'smooth'});
+    } else {
+      throw new Error('Falha no envio');
+    }
+  })
+  .catch(function(){
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'Enviar ao professor';
+    note.textContent = 'Erro ao enviar. Tente novamente.';
+    note.style.color = 'var(--hex)';
+  });
+}
+
+/* ---- reinicia tudo ---- */
+function resetAll(){
+  checked = false;
+  renderQuestions();
+  document.getElementById('resultSection').classList.remove('show');
+  document.getElementById('sendSection').classList.remove('show');
+  document.getElementById('btnCheck').disabled = false;
+}
+
+/* ---- exibe banner se voltou do Formspree com ?enviado=1 ---- */
+if(window.location.search.indexOf('enviado=1') !== -1){
+  document.getElementById('successBanner').classList.add('show');
+}
+
+renderQuestions();
+</script>
+</body>
+</html>
