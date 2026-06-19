@@ -5,6 +5,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistemas Operacionais — Professor Cassiano</title>
 <link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ---- HERO DA DISCIPLINA ---- */
+  .disc-hero{
+    padding:56px 0 48px;
+    border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(ellipse 60% 80% at -10% 60%, rgba(47,111,106,.10), transparent),
+      radial-gradient(ellipse 40% 60% at 110% 30%, rgba(47,111,106,.06), transparent);
+    position:relative;overflow:hidden;
+  }
+  .disc-hero::after{
+    content:"01";
+    position:absolute;right:-12px;top:50%;transform:translateY(-50%);
+    font-family:'Fraunces',serif;font-size:200px;font-weight:700;line-height:1;
+    color:var(--bin);opacity:.04;pointer-events:none;user-select:none;
+  }
+  .disc-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:700;color:var(--bin);margin-bottom:18px;
+  }
+  .disc-eyebrow::before{
+    content:"";display:block;width:20px;height:2px;background:var(--bin);border-radius:2px;
+  }
+  .disc-hero h1{
+    font-family:'Fraunces',serif;font-weight:700;
+    font-size:clamp(32px,5.5vw,52px);letter-spacing:-.025em;line-height:1.04;
+    margin-bottom:16px;
+  }
+  .disc-hero p{font-size:17px;color:var(--ink-soft);max-width:560px;line-height:1.65;}
+  .disc-chips{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;}
+  .disc-chip{
+    font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:20px;
+    border:1px solid var(--line);background:var(--card);color:var(--ink-soft);
+    display:inline-flex;align-items:center;gap:7px;
+  }
+  .disc-chip .dot{width:7px;height:7px;border-radius:50%;}
+
+  /* ---- SEÇÃO DISPONÍVEL ---- */
+  .live-section{padding:52px 0 0;}
+  .sec-eyebrow{
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:700;color:var(--ink-faint);margin-bottom:22px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .sec-eyebrow::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* ---- CARD PRINCIPAL DO ASSUNTO ---- */
+  .subject-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--shadow-lg);
+    transition:box-shadow .2s,transform .2s;
+  }
+  .subject-card:hover{box-shadow:0 8px 24px rgba(26,31,46,.12),0 32px 64px rgba(26,31,46,.08);transform:translateY(-2px);}
+
+  .sc-band{
+    background:var(--bin);
+    padding:24px 32px;
+    display:flex;align-items:center;gap:22px;
+  }
+  .sc-num{
+    font-family:'Fraunces',serif;font-size:72px;font-weight:700;
+    color:rgba(255,255,255,.15);line-height:1;flex-shrink:0;
+    letter-spacing:-.04em;
+  }
+  .sc-band-text .sc-badge{
+    font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+    color:rgba(255,255,255,.55);margin-bottom:6px;
+  }
+  .sc-band-text .sc-title{
+    font-family:'Fraunces',serif;font-size:28px;font-weight:600;
+    color:#fff;line-height:1.1;
+  }
+
+  .sc-body{padding:28px 32px;}
+
+  .sc-desc{font-size:16px;color:var(--ink-soft);max-width:580px;margin-bottom:24px;line-height:1.65;}
+
+  .sc-topics{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+  .topic-chip{
+    font-size:12.5px;font-weight:600;padding:5px 13px;border-radius:20px;
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid transparent;
+  }
+  .topic-chip.t-dec{background:var(--dec-bg);color:var(--dec);border-color:rgba(184,116,42,.2);}
+  .topic-chip.t-bin{background:var(--bin-bg);color:var(--bin);border-color:rgba(47,111,106,.2);}
+  .topic-chip.t-oct{background:var(--oct-bg);color:var(--oct);border-color:rgba(122,94,168,.2);}
+  .topic-chip.t-hex{background:var(--hex-bg);color:var(--hex);border-color:rgba(177,78,84,.2);}
+  .topic-chip.t-neu{background:var(--paper-2);color:var(--ink-soft);border-color:var(--line);}
+
+  .sc-actions{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    border-top:1px solid var(--line-soft);padding-top:22px;
+  }
+  .act-main{
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--bin);color:#fff;text-decoration:none;
+    padding:12px 24px;border-radius:11px;font-size:15px;font-weight:600;
+    box-shadow:0 3px 12px rgba(47,111,106,.28);
+    transition:opacity .15s,transform .12s;
+  }
+  .act-main:hover{opacity:.9;} .act-main:active{transform:scale(.97);}
+
+  .act-exercise-group{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    border-left:1px solid var(--line);padding-left:16px;
+  }
+  .act-exercise-label{font-size:12px;color:var(--ink-faint);font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+  .act-exercise-link{
+    font-size:13.5px;font-weight:600;color:var(--ink-soft);text-decoration:none;
+    padding:8px 14px;border-radius:9px;border:1px solid var(--line);
+    background:var(--paper-2);
+    display:inline-flex;align-items:center;gap:6px;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .act-exercise-link:hover{background:var(--bin-bg);color:var(--bin);border-color:var(--bin);}
+
+  /* ---- SEÇÃO EM BREVE ---- */
+  .soon-section{padding:48px 0 60px;}
+  .soon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+  .soon-card{
+    background:transparent;border:1.5px dashed var(--line);border-radius:var(--radius);
+    padding:22px 24px;
+    transition:border-color .15s,background .15s;
+  }
+  .soon-card:hover{background:var(--card);border-color:var(--line);}
+  .soon-num{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    color:var(--ink-faint);margin-bottom:12px;
+  }
+  .soon-name{
+    font-family:'Fraunces',serif;font-size:20px;font-weight:600;
+    color:var(--ink);margin-bottom:8px;line-height:1.2;
+    opacity:.65;
+  }
+  .soon-desc{font-size:13.5px;color:var(--ink-faint);line-height:1.55;}
+  .soon-badge{
+    display:inline-block;margin-top:14px;
+    font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    padding:3px 10px;border-radius:20px;background:var(--paper-2);color:var(--ink-faint);
+    border:1px solid var(--line);
+  }
+
+  /* ---- STRIPE COLOR POR ASSUNTO EM BREVE ---- */
+  .soon-card .soon-stripe{
+    height:3px;border-radius:3px;margin-bottom:18px;opacity:.4;
+  }
+
+  @media(max-width:680px){
+    .sc-band{padding:20px 22px;}
+    .sc-num{font-size:52px;}
+    .sc-band-text .sc-title{font-size:22px;}
+    .sc-body{padding:22px;}
+    .act-exercise-group{border-left:none;padding-left:0;border-top:1px solid var(--line-soft);padding-top:12px;width:100%;}
+    .disc-hero::after{display:none;}
+  }
+</style>
 </head>
 <body>
 
@@ -15,21 +172,68 @@
 </nav>
 
 <main>
-  <section class="page-hero">
+
+  <!-- HERO -->
+  <section class="disc-hero">
     <div class="container">
-      <span class="eyebrow" id="discEyebrow">Disciplina</span>
+      <div class="disc-eyebrow">Disciplina</div>
       <h1 id="discNome">Sistemas Operacionais</h1>
       <p id="discDesc">Como o computador organiza, processa e representa a informação por dentro.</p>
+      <div class="disc-chips">
+        <span class="disc-chip"><span class="dot" style="background:var(--bin)"></span>1 assunto disponível</span>
+        <span class="disc-chip"><span class="dot" style="background:var(--ink-faint)"></span>3 em preparação</span>
+      </div>
     </div>
   </section>
 
-  <section class="block">
+  <!-- DISPONÍVEL -->
+  <section class="live-section">
     <div class="container">
-      <h2>Assuntos</h2>
-      <p class="sub">Conteúdos desta disciplina. Os marcados como "em breve" ainda estão em preparação.</p>
-      <div class="card-grid" id="assuntoGrid"></div>
+      <div class="sec-eyebrow">Disponível agora</div>
+
+      <div class="subject-card">
+        <div class="sc-band">
+          <span class="sc-num">01</span>
+          <div class="sc-band-text">
+            <div class="sc-badge">Fundamentos · Assunto 01</div>
+            <div class="sc-title">Sistemas de Numeração</div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <p class="sc-desc">Binário, decimal, octal e hexadecimal — com odômetro interativo, calculadora de bits clicáveis, conversor universal e banco de 50 questões com correção automática.</p>
+
+          <div class="sc-topics">
+            <span class="topic-chip t-dec">Base 10 · Decimal</span>
+            <span class="topic-chip t-bin">Base 2 · Binário</span>
+            <span class="topic-chip t-oct">Base 8 · Octal</span>
+            <span class="topic-chip t-hex">Base 16 · Hexadecimal</span>
+            <span class="topic-chip t-neu">Conversor universal</span>
+            <span class="topic-chip t-neu">Exercícios aleatórios</span>
+            <span class="topic-chip t-neu">Referências bibliográficas</span>
+          </div>
+
+          <div class="sc-actions">
+            <a href="sistemas-numeracao.html" class="act-main">Abrir aula →</a>
+            <div class="act-exercise-group">
+              <span class="act-exercise-label">Exercícios</span>
+              <a href="exercicios-numeracao.html" class="act-exercise-link">📋 Para entrega</a>
+              <a href="exercicios-aleatorios.html" class="act-exercise-link">🎲 Prática aleatória</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
+
+  <!-- EM BREVE -->
+  <section class="soon-section">
+    <div class="container">
+      <div class="sec-eyebrow">Em preparação</div>
+      <div class="soon-grid" id="soonGrid"></div>
+    </div>
+  </section>
+
 </main>
 
 <div id="site-footer"></div>
@@ -37,34 +241,43 @@
 <script src="../assets/disciplinas.js"></script>
 <script src="../assets/shell.js" data-base="../"></script>
 <script>
-  (function(){
-    var DISC_ID = "sistemas-operacionais"; // <- identifica qual disciplina é esta
-    var data = (window.PORTAL_DISCIPLINAS||[]).find(function(d){return d.id===DISC_ID;});
-    if(!data) return;
+(function(){
+  var DISC_ID = "sistemas-operacionais";
+  var data = (window.PORTAL_DISCIPLINAS||[]).find(function(d){ return d.id === DISC_ID; });
+  if(!data) return;
 
-    document.getElementById('discNome').textContent = data.nome;
-    document.getElementById('discDesc').textContent = data.descricao;
-    document.title = data.nome + " — Professor Cassiano";
+  document.getElementById('discNome').textContent = data.nome;
+  document.getElementById('discDesc').textContent = data.descricao;
+  document.title = data.nome + " — Professor Cassiano";
 
-    var grid = document.getElementById('assuntoGrid');
-    (data.assuntos||[]).forEach(function(a, i){
-      var live = a.status === 'live';
-      var tile = document.createElement(live ? 'a' : 'div');
-      tile.className = 'tile' + (live ? '' : ' soon');
-      if(live) tile.href = '../' + a.pagina;
-      tile.style.setProperty('--tile-color','var(--'+(a.cor||'bin')+')');
-      tile.innerHTML =
-        '<span class="tnum">'+String(i+1).padStart(2,'0')+'</span>'+
-        '<h3>'+a.nome+'</h3>'+
-        '<p>'+a.descricao+'</p>'+
-        '<div class="meta">'+
-          (live
-            ? '<span class="badge live">Disponível</span><span class="arrow">→</span>'
-            : '<span class="badge">Em breve</span>')+
-        '</div>';
-      grid.appendChild(tile);
-    });
-  })();
+  var soon = (data.assuntos||[]).filter(function(a){ return a.status !== 'live'; });
+  var liveCount  = (data.assuntos||[]).filter(function(a){ return a.status === 'live'; }).length;
+  var soonCount  = soon.length;
+
+  /* atualiza chips do hero */
+  var chips = document.querySelectorAll('.disc-chip');
+  if(chips[0]) chips[0].lastChild.textContent = liveCount + (liveCount===1?' assunto disponível':' assuntos disponíveis');
+  if(chips[1]) chips[1].lastChild.textContent = soonCount + ' em preparação';
+
+  /* índice de cores para stripe */
+  var COLORS = {bin:'var(--bin)',oct:'var(--oct)',dec:'var(--dec)',hex:'var(--hex)'};
+
+  /* renderiza cards em breve */
+  var grid = document.getElementById('soonGrid');
+  soon.forEach(function(a, i){
+    var num = String(liveCount + i + 1).padStart(2,'0');
+    var color = COLORS[a.cor] || 'var(--ink-faint)';
+    var card = document.createElement('div');
+    card.className = 'soon-card';
+    card.innerHTML =
+      '<div class="soon-stripe" style="background:'+color+'"></div>'+
+      '<div class="soon-num">'+num+'</div>'+
+      '<div class="soon-name">'+a.nome+'</div>'+
+      '<div class="soon-desc">'+a.descricao+'</div>'+
+      '<span class="soon-badge">Em breve</span>';
+    grid.appendChild(card);
+  });
+})();
 </script>
 </body>
 </html>

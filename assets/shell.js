@@ -32,7 +32,6 @@
         '<nav class="site-nav" id="shellNav">'+
           '<a href="'+BASE+'index.html">Início</a>'+
           '<a href="'+BASE+'index.html#disciplinas">Disciplinas</a>'+
-          '<a href="'+BASE+'index.html#disciplinas" class="cta">Acessar →</a>'+
         '</nav>'+
       '</div>'+
     '</header>';

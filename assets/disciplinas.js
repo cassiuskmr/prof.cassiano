@@ -39,21 +39,23 @@ window.PORTAL_DISCIPLINAS = [
         status: "live"
       },
       {
-        nome: "Exercícios para Entrega",
-        descricao: "Resolva as questões de sistemas de numeração e envie os resultados diretamente ao professor.",
-        cor: "dec",
-        pagina: "disciplinas/exercicios-numeracao.html",
-        status: "live"
+        nome: "Gerência de Memória",
+        descricao: "Memória RAM, endereçamento, paginação e segmentação — como o sistema gerencia o espaço disponível.",
+        cor: "oct",
+        status: "soon"
       },
       {
-        nome: "Exercícios Aleatórios",
-        descricao: "Banco de 50 questões, 10 por tentativa, sorteadas a cada vez. Ideal para reforçar o conteúdo.",
-        cor: "oct",
-        pagina: "disciplinas/exercicios-aleatorios.html",
-        status: "live"
+        nome: "Processos e Escalonamento",
+        descricao: "Como o sistema operacional gerencia múltiplos programas ao mesmo tempo e decide a ordem de execução.",
+        cor: "dec",
+        status: "soon"
+      },
+      {
+        nome: "Sistemas de Arquivos",
+        descricao: "Estrutura de diretórios, permissões, FAT, NTFS e ext4 — como o computador organiza seus dados em disco.",
+        cor: "hex",
+        status: "soon"
       }
-      // Próximos assuntos desta disciplina entram aqui. Exemplo:
-      // { nome:"Gerência de Memória", descricao:"...", cor:"oct", status:"soon" }
     ]
   }
 
