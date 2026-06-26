@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cores no CSS: do Decimal ao Hexadecimal — Professor Cassiano</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --ink:#1a1f2e;
+    --ink-soft:#4a5168;
+    --ink-faint:#8b91a6;
+    --paper:#f6f4ee;
+    --paper-2:#efece3;
+    --card:#fffdf8;
+    --line:#e0dcd0;
+    --line-soft:#ebe7dc;
+    --bin:#2f6f6a; --bin-bg:#e3efed;
+    --oct:#7a5ea8; --oct-bg:#ede8f3;
+    --dec:#b8742a; --dec-bg:#f6ebdc;
+    --hex:#b14e54; --hex-bg:#f5e4e4;
+    --info:#2f6f6a;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(26,31,46,.04), 0 8px 24px rgba(26,31,46,.05);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{animation:none!important;transition:none!important;}}
+
+  /* ---------- LAYOUT ---------- */
+  .shell{display:flex;min-height:100vh;}
+
+  .nav{
+    width:280px;flex-shrink:0;background:var(--paper-2);border-right:1px solid var(--line);
+    padding:32px 0;position:sticky;top:0;height:100vh;overflow-y:auto;
+  }
+  .nav-brand{padding:0 28px 24px;border-bottom:1px solid var(--line);margin-bottom:20px;}
+  .nav-eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:8px;}
+  .nav-brand h1{font-family:'Fraunces',serif;font-weight:600;font-size:23px;line-height:1.15;color:var(--ink);}
+  .nav-section{padding:0 16px;margin-bottom:6px;}
+  .nav-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;padding:14px 12px 6px;}
+  .nav a{
+    display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;
+    color:var(--ink-soft);text-decoration:none;font-size:14.5px;font-weight:500;transition:background .15s,color .15s;
+  }
+  .nav a:hover{background:var(--card);color:var(--ink);}
+  .nav a.active{background:var(--ink);color:var(--paper);}
+  .nav a .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);min-width:26px;}
+  .nav a.active .num{color:var(--paper);opacity:.7;}
+
+  .main{flex:1;min-width:0;}
+  .wrap{max-width:780px;margin:0 auto;padding:0 40px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:90px 0 70px;border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(177,78,84,.06), transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(47,111,106,.05), transparent 40%);
+  }
+  .hero-eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;margin-bottom:18px;}
+  .hero h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(34px,6vw,56px);line-height:1.04;letter-spacing:-.02em;margin-bottom:22px;}
+  .hero h2 .glyphs{display:block;margin-top:10px;font-size:.62em;}
+  .b10{color:var(--dec);} .b16{color:var(--hex);}
+  .hero p{font-size:18px;color:var(--ink-soft);max-width:560px;}
+  .hero-meta{display:flex;gap:28px;margin-top:34px;flex-wrap:wrap;}
+  .hero-meta div{font-size:13.5px;color:var(--ink-soft);}
+  .hero-meta b{display:block;font-family:'Fraunces',serif;font-size:22px;color:var(--ink);font-weight:600;}
+
+  /* ---------- SEÇÕES ---------- */
+  section{padding:64px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:20px;}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;}
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--ink-faint);}
+  .sec-head h3{font-family:'Fraunces',serif;font-weight:600;font-size:30px;letter-spacing:-.01em;line-height:1.1;}
+  .sec-lede{font-size:17px;color:var(--ink-soft);margin:14px 0 30px;}
+  section h4{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:34px 0 12px;}
+  section p{margin-bottom:16px;color:var(--ink-soft);font-size:16px;}
+  section p strong{color:var(--ink);font-weight:600;}
+  .lead-in{color:var(--ink)!important;font-size:17px;}
+
+  .callout{
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--info);
+    border-radius:var(--radius);padding:18px 22px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .callout p{margin:0;font-size:15.5px;}
+  .callout .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--info);margin-bottom:6px;display:block;}
+
+  .analogy{background:linear-gradient(180deg,var(--hex-bg),transparent);border-radius:var(--radius);padding:22px 24px;margin:24px 0;border:1px solid var(--line-soft);}
+  .analogy .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--hex);margin-bottom:8px;display:block;}
+  .analogy p{margin:0;color:var(--ink);}
+
+  code{font-family:'JetBrains Mono',monospace;font-size:.88em;background:var(--paper-2);padding:2px 6px;border-radius:5px;color:var(--ink);}
+
+  .tbl-wrap{overflow-x:auto;margin:22px 0;border-radius:var(--radius);border:1px solid var(--line);}
+  table{width:100%;border-collapse:collapse;background:var(--card);font-size:14.5px;}
+  th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line-soft);}
+  th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ink-faint);background:var(--paper-2);}
+  td{font-family:'JetBrains Mono',monospace;color:var(--ink-soft);}
+  tr:last-child td{border-bottom:none;}
+  .note-col{font-family:'Inter',sans-serif!important;color:var(--ink-faint);font-size:13px;}
+
+  /* ---------- INTERATIVOS ---------- */
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin:28px 0;box-shadow:var(--shadow);}
+  .tool-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--info);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .tool-label::before{content:"▸";font-size:13px;}
+
+  .btn{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;padding:9px 18px;border-radius:9px;border:none;cursor:pointer;background:var(--info);color:#fff;transition:opacity .15s,transform .1s;}
+  .btn:hover{opacity:.9;} .btn:active{transform:scale(.97);}
+  .btn.ghost{background:var(--paper-2);color:var(--ink);border:1px solid var(--line);}
+  .btn:focus-visible{outline:2px solid var(--info);outline-offset:2px;}
+
+  /* ---- MISTURADOR RGB → HEX ---- */
+  .mixer{display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;}
+  .mixer-swatch{width:130px;height:130px;border-radius:16px;border:1px solid var(--line);box-shadow:var(--shadow);flex-shrink:0;}
+  .mixer-controls{flex:1;min-width:260px;}
+  .channel{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .channel .clabel{width:16px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;text-align:center;}
+  .channel.r .clabel{color:#c0392b;} .channel.g .clabel{color:#27ae60;} .channel.b .clabel{color:#2563eb;}
+  .channel input[type=range]{flex:1;accent-color:var(--ink);}
+  .channel .cval{width:38px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--ink-soft);}
+  .channel .chex{width:30px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:700;color:var(--ink);}
+  .mixer-out{display:flex;gap:24px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);}
+  .mixer-out .ol{font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:3px;}
+  .mixer-out .ov{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:var(--ink);}
+  .mixer-hexinput{display:flex;align-items:center;gap:8px;margin-top:16px;}
+  .mixer-hexinput label{font-size:13.5px;color:var(--ink-soft);}
+  .mixer-hexinput input{font-family:'JetBrains Mono',monospace;font-size:14.5px;font-weight:700;width:100px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);}
+  .mixer-hexinput input:focus{outline:2px solid var(--info);outline-offset:1px;}
+  .presets{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+  .preset-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer;transition:transform .12s;}
+  .preset-dot:hover{transform:scale(1.15);}
+
+  /* ---- EDITOR DE CSS AO VIVO ---- */
+  .cssed{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+  .cssed textarea{width:100%;min-height:190px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;padding:14px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);resize:vertical;}
+  .cssed textarea:focus{outline:2px solid var(--info);outline-offset:1px;}
+  .preview-pane{display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px dashed var(--line);background:var(--paper-2);padding:24px;min-height:190px;}
+  .preview-card{padding:26px;border-radius:12px;max-width:230px;text-align:center;}
+  .preview-card h5{font-family:'Fraunces',serif;font-size:18px;margin-bottom:8px;}
+  .preview-card p{font-size:13.5px;margin:0;opacity:.92;}
+  .css-presets{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+
+  /* ---------- EXERCÍCIOS ---------- */
+  .q-card{
+    background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow);transition:border-color .2s;
+  }
+  .q-card.ok{border-color:var(--bin);}
+  .q-card.no{border-color:var(--hex);}
+  .q-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+  .q-num-badge{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    background:var(--ink);color:var(--paper);border-radius:7px;padding:3px 9px;
+    flex-shrink:0;margin-top:2px;transition:background .2s;
+  }
+  .q-card.ok .q-num-badge{background:var(--bin);}
+  .q-card.no .q-num-badge{background:var(--hex);}
+  .q-cat{
+    font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    padding:3px 9px;border-radius:20px;flex-shrink:0;margin-top:3px;
+  }
+  .q-cat.hex{background:var(--hex-bg);color:var(--hex);}
+  .q-cat.dec{background:var(--dec-bg);color:var(--dec);}
+  .q-cat.con{background:var(--oct-bg);color:var(--oct);}
+  .q-text{font-size:15.5px;color:var(--ink);font-weight:500;line-height:1.5;flex:1;}
+  .q-text code{font-size:.93em;font-weight:700;}
+  .q-row{display:flex;align-items:center;gap:10px;}
+  .q-input{
+    font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;
+    width:150px;padding:9px 13px;border:1.5px solid var(--line);border-radius:9px;
+    background:var(--paper);color:var(--ink);transition:border-color .15s;
+  }
+  .q-input:focus{outline:none;border-color:var(--info);}
+  .q-input:disabled{background:var(--paper-2);color:var(--ink-soft);}
+  .q-feedback{
+    margin-top:12px;padding:10px 14px;border-radius:9px;
+    font-size:14px;font-weight:500;display:none;gap:9px;align-items:flex-start;
+  }
+  .q-feedback.ok{display:flex;background:var(--bin-bg);color:var(--bin);border:1px solid var(--bin);}
+  .q-feedback.no{display:flex;background:var(--hex-bg);color:var(--hex);border:1px solid var(--hex);}
+  .q-feedback .fi{font-size:15px;flex-shrink:0;margin-top:1px;}
+  .q-feedback .fb .sol{display:block;margin-top:3px;font-size:13px;color:var(--ink-soft);font-weight:400;}
+  .q-feedback code{background:rgba(255,255,255,.5);}
+
+  .check-bar{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 20px;margin-top:6px;
+  }
+  .btn-check{
+    font-family:'Inter',sans-serif;font-size:15px;font-weight:600;
+    padding:11px 24px;border-radius:10px;border:none;cursor:pointer;
+    background:var(--info);color:#fff;transition:opacity .15s,transform .1s;
+    box-shadow:0 2px 8px rgba(47,111,106,.22);
+  }
+  .btn-check:hover{opacity:.9;} .btn-check:active{transform:scale(.97);}
+  .btn-check:disabled{opacity:.4;cursor:default;transform:none;}
+  .btn-retry{
+    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+    padding:10px 18px;border-radius:10px;cursor:pointer;
+    background:var(--paper);color:var(--ink);border:1px solid var(--line);
+    transition:background .15s;
+  }
+  .btn-retry:hover{background:var(--card);}
+
+  .score-strip{
+    display:flex;align-items:center;gap:20px;
+    background:var(--ink);color:var(--paper);border-radius:var(--radius);
+    padding:18px 22px;margin-top:20px;flex-wrap:wrap;
+    display:none;
+  }
+  .score-strip.show{display:flex;}
+  .score-big{font-family:'Fraunces',serif;font-size:40px;font-weight:700;line-height:1;}
+  .score-sub{font-size:13px;opacity:.55;margin-top:2px;}
+  .score-pct{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;margin-left:auto;}
+  .score-msg{font-size:14px;opacity:.7;width:100%;margin-top:-4px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:48px 0 64px;text-align:center;}
+  footer p{font-size:13.5px;color:var(--ink-faint);}
+
+  /* ---------- MOBILE ---------- */
+  .menu-toggle{display:none;}
+  @media (max-width:920px){
+    .nav{position:fixed;left:-300px;z-index:50;transition:left .25s;box-shadow:0 0 40px rgba(0,0,0,.15);}
+    .nav.open{left:0;}
+    .menu-toggle{
+      display:flex;align-items:center;gap:8px;position:fixed;top:16px;left:16px;z-index:60;
+      background:var(--ink);color:var(--paper);border:none;border-radius:10px;
+      padding:10px 15px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;
+      box-shadow:var(--shadow);
+    }
+    .wrap{padding:0 22px;}
+    .hero{padding:78px 0 54px;}
+    .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:40;}
+    .scrim.show{display:block;}
+    .q-top{flex-wrap:wrap;}
+    .cssed{grid-template-columns:1fr;}
+    .mixer{flex-direction:column;align-items:stretch;}
+    .mixer-swatch{width:100%;height:90px;}
+  }
+</style>
+<style id="liveStyleTag"></style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="toggleNav()">☰ Seções</button>
+<div class="scrim" id="scrim" onclick="toggleNav()"></div>
+
+<div class="shell">
+  <!-- NAVEGAÇÃO -->
+  <aside class="nav" id="nav">
+    <a href="sistemas-de-informacao.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-faint);font-size:13px;font-weight:600;padding:0 28px 16px;">← Sistemas de Informação</a>
+    <div class="nav-brand">
+      <div class="nav-eyebrow">Assunto</div>
+      <h1>Cores no CSS</h1>
+    </div>
+    <nav>
+      <div class="nav-label">Fundamentos</div>
+      <div class="nav-section">
+        <a href="#intro" class="nav-link"><span class="num">00</span><span>Por onde começar</span></a>
+        <a href="#rgb"   class="nav-link"><span class="num">01</span><span>RGB — três números decimais</span></a>
+        <a href="#hex"   class="nav-link"><span class="num">02</span><span>De decimal para hexadecimal</span></a>
+      </div>
+      <div class="nav-label">Prática</div>
+      <div class="nav-section">
+        <a href="#editor"     class="nav-link"><span class="num">03</span><span>Editor de CSS ao vivo</span></a>
+        <a href="#exercicios" class="nav-link"><span class="num">04</span><span>Exercícios</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main">
+    <div class="hero">
+      <div class="wrap">
+        <div class="hero-eyebrow">Ensino Médio · Computação · Design Web</div>
+        <h2>Toda cor que você vê na tela é, por baixo, só um número.
+          <span class="glyphs"><b class="b10">204</b> → <b class="b16">CC</b></span>
+        </h2>
+        <p>O mesmo decimal que você usa pra contar dinheiro mistura as cores da tela — e o CSS escreve essa mistura em hexadecimal. Vamos ver essa ponte funcionando em tempo real.</p>
+        <div class="hero-meta">
+          <div><b>256</b> tons por canal</div>
+          <div><b>3</b> canais — R · G · B</div>
+          <div><b>6</b> dígitos no hex</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+
+      <!-- 00 INTRO -->
+      <section id="intro">
+        <div class="sec-head"><span class="sec-num">00</span><h3>Por onde começar</h3></div>
+        <p class="sec-lede">Decimal está em todo lugar no seu dia: o preço de um produto, a hora no relógio, a velocidade no painel do carro. A tela do computador usa esse mesmo decimal — só que para misturar luz em vez de contar coisas.</p>
+        <p class="lead-in">Cada ponto da tela (pixel) é formado por três luzinhas: uma <strong>vermelha</strong>, uma <strong>verde</strong> e uma <strong>azul</strong>. A intensidade de cada uma é um número decimal de 0 a 255. Combinando os três números, você obtém qualquer cor — esse é o sistema <strong>RGB</strong> (Red, Green, Blue).</p>
+
+        <div class="analogy">
+          <span class="tag">Analogia · três torneiras de tinta luminosa</span>
+          <p>Imagine três torneiras — uma de luz vermelha, uma verde e uma azul — cada uma com um registro que vai de 0 (fechado) a 255 (totalmente aberto). Abrir as três no máximo dá branco. Fechar as três dá preto. Qualquer outra combinação dá uma cor diferente. É exatamente assim que cada pixel da sua tela funciona.</p>
+        </div>
+
+        <p>O problema é que escrever três números decimais (tipo <code>51, 102, 204</code>) é longo para usar em código. O CSS resolve isso comprimindo os três números em um único código <strong>hexadecimal</strong> — a mesma base 16 que você já viu na aula de Sistemas de Numeração. Vamos destrinchar essa conversão.</p>
+      </section>
+
+      <!-- 01 RGB -->
+      <section id="rgb">
+        <div class="sec-head"><span class="sec-num">01</span><h3>RGB — três números decimais</h3></div>
+        <p class="sec-lede">Cada canal de cor é um número decimal entre 0 e 255. Por que justo até 255? Porque cada canal é guardado em exatamente <strong>1 byte</strong> — 8 bits.</p>
+
+        <div class="callout">
+          <span class="tag">Lembrando do byte</span>
+          <p>8 bits formam 1 byte, com 256 valores possíveis: de <code>00000000</code> (0) a <code>11111111</code> (255). É exatamente a faixa de cada canal de cor — nada de coincidência, é a mesma matemática da <a href="sistemas-numeracao.html">aula de Sistemas de Numeração</a>.</p>
+        </div>
+
+        <p>Misture os três canais abaixo e observe a amostra de cor mudando ao vivo. Repare que, conforme você arrasta cada controle, o valor decimal e o par hexadecimal daquele canal aparecem lado a lado — é a mesma conversão decimal → hexadecimal de sempre, só que aplicada a uma cor.</p>
+
+        <div class="tool">
+          <div class="tool-label">Misturador de cores</div>
+          <div class="mixer">
+            <div class="mixer-swatch" id="mxSwatch"></div>
+            <div class="mixer-controls">
+              <div class="channel r">
+                <span class="clabel">R</span>
+                <input type="range" id="mxRanger" min="0" max="255" value="51">
+                <span class="cval" id="mxValr">51</span>
+                <span class="chex" id="mxHexr">33</span>
+              </div>
+              <div class="channel g">
+                <span class="clabel">G</span>
+                <input type="range" id="mxRangeg" min="0" max="255" value="102">
+                <span class="cval" id="mxValg">102</span>
+                <span class="chex" id="mxHexg">66</span>
+              </div>
+              <div class="channel b">
+                <span class="clabel">B</span>
+                <input type="range" id="mxRangeb" min="0" max="255" value="204">
+                <span class="cval" id="mxValb">204</span>
+                <span class="chex" id="mxHexb">CC</span>
+              </div>
+
+              <div class="mixer-out">
+                <div>
+                  <div class="ol">CSS — rgb()</div>
+                  <div class="ov" id="mxRgbOut">rgb(51, 102, 204)</div>
+                </div>
+                <div>
+                  <div class="ol">CSS — hexadecimal</div>
+                  <div class="ov" id="mxHexOut">#3366CC</div>
+                </div>
+              </div>
+
+              <div class="mixer-hexinput">
+                <label for="mxHexInput">Ou digite o hex direto:</label>
+                <input type="text" id="mxHexInput" value="#3366CC" maxlength="7">
+              </div>
+
+              <div class="presets" id="mxPresets">
+                <div class="preset-dot" style="background:#E74C3C" data-hex="E74C3C" title="Vermelho"></div>
+                <div class="preset-dot" style="background:#2ECC71" data-hex="2ECC71" title="Verde"></div>
+                <div class="preset-dot" style="background:#3498DB" data-hex="3498DB" title="Azul"></div>
+                <div class="preset-dot" style="background:#F1C40F" data-hex="F1C40F" title="Amarelo"></div>
+                <div class="preset-dot" style="background:#9B59B6" data-hex="9B59B6" title="Roxo"></div>
+                <div class="preset-dot" style="background:#1A1F2E" data-hex="1A1F2E" title="Quase preto"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 HEX -->
+      <section id="hex">
+        <div class="sec-head"><span class="sec-num">02</span><h3>De decimal para hexadecimal</h3></div>
+        <p class="sec-lede">A conversão é a mesma de dividir por 16, repetidas vezes — só que feita uma vez para cada canal.</p>
+
+        <p>Pegue o canal azul do exemplo acima: decimal <code>204</code>. Dividindo por 16 sucessivamente:</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Divisão</th><th>Resultado</th><th>Resto</th></tr></thead>
+            <tbody>
+              <tr><td>204 ÷ 16</td><td>12</td><td><strong>12 = C</strong></td></tr>
+              <tr><td>12 ÷ 16</td><td>0</td><td><strong>12 = C</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Lendo de baixo para cima: <code>CC</code>. Como todo canal de cor vai de 0 a 255, ele <strong>sempre</strong> vira exatamente 2 dígitos hexadecimais — nunca mais, nunca menos.</p>
+
+        <div class="callout" style="border-left-color:var(--hex);">
+          <span class="tag" style="color:var(--hex)">Por que sempre 2 dígitos por canal</span>
+          <p>2 dígitos hexadecimais cobrem de <code>00</code> a <code>FF</code> — exatamente 256 valores, igual à faixa decimal 0–255 de cada canal. Três canais × 2 dígitos = os <strong>6 dígitos</strong> de um código <code>#RRGGBB</code>.</p>
+        </div>
+
+        <h4>O atalho de 3 dígitos</h4>
+        <p>Quando os dois dígitos de cada par são iguais, o CSS aceita uma forma curta: <code>#FF6600</code> pode ser escrito <code>#F60</code>. Repare que isso só funciona quando dá pra repetir o dígito — <code>#3366CC</code> não tem atalho, porque <code>33</code>, <code>66</code> e <code>CC</code> já são pares repetidos! Esse aliás é exatamente o caso do azul do misturador acima.</p>
+
+        <p>Volte ao misturador da seção anterior e arraste os controles — a coluna hexadecimal de cada canal se recalcula instantaneamente, sempre por essa mesma divisão por 16.</p>
+      </section>
+
+      <!-- 03 EDITOR -->
+      <section id="editor">
+        <div class="sec-head"><span class="sec-num">03</span><h3>Editor de CSS ao vivo</h3></div>
+        <p class="sec-lede">Cores hexadecimais aparecem em qualquer propriedade CSS que aceite cor: fundo, texto, borda, sombra. Edite o código abaixo e veja o cartão de exemplo mudar instantaneamente.</p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Formato</th><th>Exemplo</th><th class="note-col">Observação</th></tr></thead>
+            <tbody>
+              <tr><td>Hexadecimal</td><td>#3366CC</td><td class="note-col">o mais usado em CSS</td></tr>
+              <tr><td>rgb()</td><td>rgb(51, 102, 204)</td><td class="note-col">os três decimais, sem conversão</td></tr>
+              <tr><td>Nome da cor</td><td>royalblue</td><td class="note-col">só para ~150 cores com nome</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tool">
+          <div class="tool-label">Editor ao vivo</div>
+          <div class="cssed">
+            <textarea id="cssEditor" spellcheck="false"></textarea>
+            <div class="preview-pane">
+              <div class="preview-card" id="previewCard">
+                <h5>Cartão de exemplo</h5>
+                <p>Edite o CSS ao lado e veja esta caixa mudar.</p>
+              </div>
+            </div>
+          </div>
+          <div class="css-presets">
+            <button class="btn ghost" onclick="loadPreset(0)">Padrão</button>
+            <button class="btn ghost" onclick="loadPreset(1)">Minimalista</button>
+            <button class="btn ghost" onclick="loadPreset(2)">Vibrante</button>
+            <button class="btn ghost" onclick="loadPreset(3)">Escuro</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 EXERCÍCIOS -->
+      <section id="exercicios">
+        <div class="sec-head"><span class="sec-num">04</span><h3>Exercícios</h3></div>
+        <p class="sec-lede">6 questões sorteadas a cada rodada. Responda tudo e confira de uma vez. Clique em <strong>Nova tentativa</strong> para um novo conjunto.</p>
+
+        <div id="qList"></div>
+
+        <div class="check-bar">
+          <button class="btn-check" id="btnCheck" onclick="checkAll()">Conferir tudo</button>
+          <button class="btn-retry" id="btnRetry" onclick="retry()" style="display:none">↺ Nova tentativa</button>
+        </div>
+
+        <div class="score-strip" id="scoreStrip">
+          <div>
+            <div class="score-big" id="scoreNum">—</div>
+            <div class="score-sub">certas de 6</div>
+          </div>
+          <div class="score-pct" id="scorePct"></div>
+          <div class="score-msg" id="scoreMsg"></div>
+        </div>
+      </section>
+
+      <footer>
+        <p>Material didático de apoio · Cores no CSS · uso livre em sala de aula</p>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+/* ===== NAV MOBILE ===== */
+function toggleNav(){
+  document.getElementById('nav').classList.toggle('open');
+  document.getElementById('scrim').classList.toggle('show');
+}
+document.querySelectorAll('.nav-link').forEach(function(a){
+  a.addEventListener('click',function(){
+    if(window.innerWidth<=920){ toggleNav(); }
+  });
+});
+
+/* ===== SCROLLSPY ===== */
+var links=document.querySelectorAll('.nav-link');
+var secs=document.querySelectorAll('section');
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      var id=e.target.id;
+      links.forEach(function(l){
+        l.classList.toggle('active',l.getAttribute('href')==='#'+id);
+      });
+    }
+  });
+},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(function(s){spy.observe(s);});
+
+/* ===== MISTURADOR RGB → HEX ===== */
+var mix={r:51,g:102,b:204};
+function hx(n){ return n.toString(16).toUpperCase().padStart(2,'0'); }
+function mixRender(){
+  document.getElementById('mxSwatch').style.background='rgb('+mix.r+','+mix.g+','+mix.b+')';
+  ['r','g','b'].forEach(function(ch){
+    document.getElementById('mxRange'+ch).value=mix[ch];
+    document.getElementById('mxVal'+ch).textContent=mix[ch];
+    document.getElementById('mxHex'+ch).textContent=hx(mix[ch]);
+  });
+  var hex='#'+hx(mix.r)+hx(mix.g)+hx(mix.b);
+  document.getElementById('mxHexOut').textContent=hex;
+  document.getElementById('mxRgbOut').textContent='rgb('+mix.r+', '+mix.g+', '+mix.b+')';
+  document.getElementById('mxHexInput').value=hex;
+}
+['r','g','b'].forEach(function(ch){
+  document.getElementById('mxRange'+ch).addEventListener('input',function(e){
+    mix[ch]=parseInt(e.target.value,10);
+    mixRender();
+  });
+});
+document.getElementById('mxHexInput').addEventListener('input',function(e){
+  var v=e.target.value.trim().replace(/^#/,'');
+  if(!/^[0-9A-Fa-f]{6}$/.test(v)) return;
+  mix.r=parseInt(v.substring(0,2),16);
+  mix.g=parseInt(v.substring(2,4),16);
+  mix.b=parseInt(v.substring(4,6),16);
+  mixRender();
+});
+document.querySelectorAll('#mxPresets .preset-dot').forEach(function(d){
+  d.addEventListener('click',function(){
+    var v=d.dataset.hex;
+    mix.r=parseInt(v.substring(0,2),16);
+    mix.g=parseInt(v.substring(2,4),16);
+    mix.b=parseInt(v.substring(4,6),16);
+    mixRender();
+  });
+});
+mixRender();
+
+/* ===== EDITOR DE CSS AO VIVO ===== */
+var CSS_PRESETS=[
+  "background-color: #3366CC;\ncolor: #ffffff;\nborder-radius: 16px;\npadding: 28px;\nfont-weight: 600;\nbox-shadow: 0 8px 24px rgba(0,0,0,.18);",
+  "background-color: #ffffff;\ncolor: #1a1f2e;\nborder: 2px solid #1a1f2e;\nborder-radius: 4px;\npadding: 28px;\nfont-weight: 500;",
+  "background-color: #F1C40F;\ncolor: #1a1f2e;\nborder-radius: 50px;\npadding: 28px;\nfont-weight: 700;\nbox-shadow: 0 10px 20px rgba(241,196,15,.4);",
+  "background-color: #1a1f2e;\ncolor: #2ECC71;\nborder-radius: 8px;\npadding: 28px;\nfont-weight: 600;\nborder: 1px solid #2ECC71;"
+];
+function applyCss(){
+  var css=document.getElementById('cssEditor').value;
+  document.getElementById('liveStyleTag').textContent='.preview-card{'+css+'}';
+}
+function loadPreset(i){
+  document.getElementById('cssEditor').value=CSS_PRESETS[i];
+  applyCss();
+}
+document.getElementById('cssEditor').addEventListener('input',applyCss);
+loadPreset(0);
+
+/* ===================================================================
+   EXERCÍCIOS — banco de 16 questões, 6 por rodada
+   =================================================================== */
+var BANK=[
+  {cat:'hex', t:'Qual o valor hexadecimal do canal decimal <code>255</code>?', a:'FF',  sol:'255 é o máximo de 8 bits → FF'},
+  {cat:'hex', t:'Qual o valor hexadecimal do canal decimal <code>0</code>?',   a:'00',  sol:'Canal desligado → 00'},
+  {cat:'hex', t:'Qual o valor hexadecimal do canal decimal <code>128</code>?', a:'80',  sol:'128 = 8×16 + 0 → 80'},
+  {cat:'hex', t:'Qual o valor hexadecimal do canal decimal <code>51</code>?',  a:'33',  sol:'51 = 3×16 + 3 → 33'},
+  {cat:'hex', t:'Qual o valor hexadecimal do canal decimal <code>16</code>?',  a:'10',  sol:'16 é a base do hex → vira a casa: 10'},
+  {cat:'hex', t:'Qual o valor hexadecimal do canal decimal <code>102</code>?', a:'66',  sol:'102 = 6×16 + 6 → 66'},
+  {cat:'dec', t:'Qual o valor decimal do par hexadecimal <code>FF</code>?', a:'255', sol:'15×16 + 15 = 255'},
+  {cat:'dec', t:'Qual o valor decimal do par hexadecimal <code>00</code>?', a:'0',   sol:'00 = canal desligado'},
+  {cat:'dec', t:'Qual o valor decimal do par hexadecimal <code>80</code>?', a:'128', sol:'8×16 + 0 = 128'},
+  {cat:'dec', t:'Qual o valor decimal do par hexadecimal <code>CC</code>?', a:'204', sol:'12×16 + 12 = 204'},
+  {cat:'dec', t:'Qual o valor decimal do par hexadecimal <code>A0</code>?', a:'160', sol:'10×16 + 0 = 160'},
+  {cat:'con', t:'Quantos dígitos hexadecimais tem uma cor CSS no formato <code>#RRGGBB</code>?', a:'6', sol:'2 dígitos por canal × 3 canais = 6'},
+  {cat:'con', t:'Quantos bits cada par hexadecimal de canal representa?', a:'8', sol:'4 bits por dígito × 2 dígitos = 8 bits = 1 byte'},
+  {cat:'con', t:'Em <code>#00FF00</code> (verde puro), qual o valor decimal do canal G?', a:'255', sol:'FF = 255, o canal verde está no máximo'},
+  {cat:'con', t:'Qual a cor resultante quando R, G e B estão todos em <code>255</code>?', a:'branco', sol:'Todos os canais no máximo formam o branco'},
+  {cat:'con', t:'Qual a cor resultante quando R, G e B estão todos em <code>0</code>?',   a:'preto',  sol:'Todos os canais desligados formam o preto'}
+];
+var CAT_LABEL={hex:'Decimal → Hex', dec:'Hex → Decimal', con:'Conceitual'};
+var current=[], checked=false;
+
+function norm(s){ return (s||'').toString().trim().toUpperCase().replace(/^0X/,'').replace(/^#/,''); }
+
+function pickRandom(n){
+  var pool=BANK.slice();
+  for(var i=pool.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=pool[i]; pool[i]=pool[j]; pool[j]=t;
+  }
+  return pool.slice(0,n);
+}
+
+function render(){
+  checked=false;
+  current=pickRandom(6);
+  document.getElementById('btnCheck').disabled=false;
+  document.getElementById('btnRetry').style.display='none';
+  document.getElementById('scoreStrip').classList.remove('show');
+
+  var list=document.getElementById('qList');
+  list.innerHTML='';
+  current.forEach(function(q,i){
+    var c=document.createElement('div');
+    c.className='q-card'; c.id='qc'+i;
+    c.innerHTML=
+      '<div class="q-top">'+
+        '<span class="q-num-badge" id="qn'+i+'">'+(i+1)+'</span>'+
+        '<span class="q-cat '+q.cat+'">'+CAT_LABEL[q.cat]+'</span>'+
+        '<span class="q-text">'+q.t+'</span>'+
+      '</div>'+
+      '<div class="q-row">'+
+        '<input class="q-input" id="qi'+i+'" type="text" placeholder="sua resposta" autocomplete="off">'+
+      '</div>'+
+      '<div class="q-feedback" id="qf'+i+'"></div>';
+    list.appendChild(c);
+  });
+}
+
+function checkAll(){
+  if(checked) return;
+  checked=true;
+  document.getElementById('btnCheck').disabled=true;
+  document.getElementById('btnRetry').style.display='';
+
+  var ok=0;
+  current.forEach(function(q,i){
+    var inp=document.getElementById('qi'+i);
+    var given=norm(inp.value);
+    var correct=norm(q.a);
+    var isOk=given===correct;
+    if(isOk) ok++;
+    inp.disabled=true;
+    var card=document.getElementById('qc'+i);
+    card.classList.add(isOk?'ok':'no');
+    var fb=document.getElementById('qf'+i);
+    if(isOk){
+      fb.className='q-feedback ok';
+      fb.innerHTML='<span class="fi">✓</span><span class="fb">Correto! <span class="sol">'+q.sol+'</span></span>';
+    } else {
+      fb.className='q-feedback no';
+      fb.innerHTML='<span class="fi">✗</span><span class="fb">Sua resposta: <code>'+(inp.value||'—')+'</code> · Correta: <code>'+q.a+'</code><span class="sol">'+q.sol+'</span></span>';
+    }
+  });
+
+  document.getElementById('scoreNum').textContent=ok;
+  document.getElementById('scorePct').textContent=Math.round(ok/6*100)+'%';
+  var msgs=['Continue praticando — você consegue!','Quase lá, tente outra rodada!','Bom desempenho!','Muito bem! Pratique mais uma vez.','Excelente! Você dominou o conteúdo!'];
+  var pct=ok/6;
+  document.getElementById('scoreMsg').textContent=pct>=1?msgs[4]:pct>=.8?msgs[3]:pct>=.6?msgs[2]:pct>=.4?msgs[1]:msgs[0];
+  document.getElementById('scoreStrip').classList.add('show');
+  document.getElementById('scoreStrip').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function retry(){
+  render();
+  document.getElementById('exercicios').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target.classList.contains('q-input')){
+    var idx=parseInt(e.target.id.replace('qi',''));
+    var next=document.getElementById('qi'+(idx+1));
+    if(next) next.focus();
+    else checkAll();
+  }
+});
+
+render();
+</script>
+<script src="../assets/disciplinas.js"></script>
+<script src="../assets/shell.js" data-base="../"></script>
+</body>
+</html>

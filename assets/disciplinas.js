@@ -39,6 +39,13 @@ window.PORTAL_DISCIPLINAS = [
         status: "live"
       },
       {
+        nome: "Cores no CSS: do Decimal ao Hexadecimal",
+        descricao: "Como o RGB (três números decimais de 0 a 255) se transforma no hexadecimal do CSS — com misturador de cores e editor de estilos ao vivo.",
+        cor: "hex",
+        pagina: "disciplinas/cores-css.html",
+        status: "live"
+      },
+      {
         nome: "Gerência de Memória",
         descricao: "Memória RAM, endereçamento, paginação e segmentação — como o sistema gerencia o espaço disponível.",
         cor: "oct",

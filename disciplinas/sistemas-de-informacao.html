@@ -59,6 +59,10 @@
     transition:box-shadow .2s,transform .2s;
   }
   .subject-card:hover{box-shadow:0 8px 24px rgba(26,31,46,.12),0 32px 64px rgba(26,31,46,.08);transform:translateY(-2px);}
+  .subject-card + .subject-card{margin-top:20px;}
+  .subject-card.theme-hex .sc-band{background:var(--hex);}
+  .subject-card.theme-hex .act-main{background:var(--hex);box-shadow:0 3px 12px rgba(177,78,84,.28);}
+  .subject-card.theme-hex .act-exercise-link:hover{background:var(--hex-bg);color:var(--hex);border-color:var(--hex);}
 
   .sc-band{
     background:var(--bin);
@@ -180,7 +184,7 @@
       <h1 id="discNome">Sistemas de Informação</h1>
       <p id="discDesc">Como o computador organiza, processa e representa a informação por dentro.</p>
       <div class="disc-chips">
-        <span class="disc-chip"><span class="dot" style="background:var(--bin)"></span>1 assunto disponível</span>
+        <span class="disc-chip"><span class="dot" style="background:var(--bin)"></span>2 assuntos disponíveis</span>
         <span class="disc-chip"><span class="dot" style="background:var(--ink-faint)"></span>3 em preparação</span>
       </div>
     </div>
@@ -219,6 +223,31 @@
               <a href="exercicios-numeracao.html" class="act-exercise-link">📋 Para entrega</a>
               <a href="exercicios-aleatorios.html" class="act-exercise-link">🎲 Prática aleatória</a>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subject-card theme-hex">
+        <div class="sc-band">
+          <span class="sc-num">02</span>
+          <div class="sc-band-text">
+            <div class="sc-badge">Aplicações · Assunto 02</div>
+            <div class="sc-title">Cores no CSS: do Decimal ao Hexadecimal</div>
+          </div>
+        </div>
+        <div class="sc-body">
+          <p class="sc-desc">Como o RGB — três números decimais de 0 a 255 — se transforma no código hexadecimal usado em todo CSS, com misturador de cores e editor de estilos ao vivo.</p>
+
+          <div class="sc-topics">
+            <span class="topic-chip t-dec">RGB · decimal</span>
+            <span class="topic-chip t-hex">Hexadecimal</span>
+            <span class="topic-chip t-neu">Misturador de cores</span>
+            <span class="topic-chip t-neu">Editor de CSS ao vivo</span>
+            <span class="topic-chip t-neu">Exercícios</span>
+          </div>
+
+          <div class="sc-actions">
+            <a href="cores-css.html" class="act-main">Abrir aula →</a>
           </div>
         </div>
       </div>
