@@ -25,11 +25,11 @@
 
 window.PORTAL_DISCIPLINAS = [
   {
-    id: "sistemas-operacionais",
-    nome: "Sistemas Operacionais",
+    id: "sistemas-de-informacao",
+    nome: "Sistemas de Informação",
     descricao: "Como o computador organiza, processa e representa a informação por dentro.",
     cor: "bin",
-    pagina: "disciplinas/sistemas-operacionais.html",
+    pagina: "disciplinas/sistemas-de-informacao.html",
     assuntos: [
       {
         nome: "Sistemas de Numeração",
